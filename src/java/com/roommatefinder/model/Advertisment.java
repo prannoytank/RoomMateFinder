@@ -21,7 +21,21 @@ public class Advertisment {
     private String postalCode;
     private String latitude;
     private String longitude;
-    private AdvertismentPreference advertismentPreference;
+    private String gender = "M";
+    private String pet = "Y";
+    private String diet = "Veg";
+    private String smoke = "N";
+    private String alcohol = "N";
+    private double rent;
+    private String buildingType;
+    private String roomType;
+    private int noOfRooms;
+    private String description;
+    
+    
+    
+    
+   
 
     public int getAdId() {
         return adId;
@@ -103,12 +117,93 @@ public class Advertisment {
         this.longitude = longitude;
     }
 
-    public AdvertismentPreference getAdvertismentPreference() {
-        return advertismentPreference;
+  
+    public String getGender() {
+        return gender;
     }
 
-    public void setAdvertismentPreference(AdvertismentPreference advertismentPreference) {
-        this.advertismentPreference = advertismentPreference;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
+    public String getPet() {
+        return pet;
+    }
+
+    public void setPet(String pet) {
+        this.pet = pet;
+    }
+
+    
+
+    public String getDiet() {
+        return diet;
+    }
+
+    public void setDiet(String diet) {
+        this.diet = diet;
+    }
+
+    public String getSmoke() {
+        return smoke;
+    }
+
+    public void setSmoke(String smoke) {
+        this.smoke = smoke;
+    }
+
+    public String getAlcohol() {
+        return alcohol;
+    }
+
+    public void setAlcohol(String alcohol) {
+        this.alcohol = alcohol;
+    }
+
+   
+
+    
+
+    public double getRent() {
+        return rent;
+    }
+
+    public void setRent(double rent) {
+        this.rent = rent;
+    }
+
+    public String getBuildingType() {
+        return buildingType;
+    }
+
+    public void setBuildingType(String buildingType) {
+        this.buildingType = buildingType;
+    }
+
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
+    }
+
+    public int getNoOfRooms() {
+        return noOfRooms;
+    }
+
+    public void setNoOfRooms(int noOfRooms) {
+        this.noOfRooms = noOfRooms;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    
+    
 }

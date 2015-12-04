@@ -15,7 +15,7 @@
 
 
    
-    <context:component-scan base-package="com.roommatefinder.controller" />
+    <context:component-scan base-package="com.roommatefinder" />
     <!--
     Most controllers will use the ControllerClassNameHandlerMapping above, but
     for the index controller we are using ParameterizableViewController, so we must
@@ -24,6 +24,14 @@
     <mvc:resources mapping="/resources/**" location="/resources/" />
 
     <mvc:annotation-driven />
+    <bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="com/roommatefinder/validator/validations" />
+                <property name="defaultEncoding" value="UTF-8" />
+                
+	</bean> 
+        
+    <bean id="advertismentValidator" class="com.roommatefinder.validator.AdvertismentValidator" />
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         
