@@ -1,7 +1,9 @@
 package com.roommatefinder.controller;
+import com.roommatefinder.daoImpl.AdvertismentDaoImpl;
 import com.roommatefinder.model.Advertisment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.validation.Valid;
 
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 /**
  *
  * @author DianaA
@@ -29,10 +30,12 @@ public class AdvancedSearchController {
  
  @RequestMapping(method = RequestMethod.GET)
  public String initForm(Model model) {
+    
         Advertisment adModel1 = new Advertisment();
         model.addAttribute("adModel1", adModel1);
-         initModelList(model);
+        initModelList(model);
         return "pages/home/advancedSearch";
+          
     }
  
  private void initModelList(Model model){
@@ -65,22 +68,23 @@ public class AdvancedSearchController {
      noOfRooms.add(4);
      noOfRooms.add(5);
      model.addAttribute("noOfRooms", noOfRooms);
-     
-        
+          
  }
  
  @RequestMapping(method = RequestMethod.POST)
-	public String submitForm(Model model,@ModelAttribute("adModel1") @Valid Advertisment adModel1, BindingResult result) {
-              
+	public Advertisment submitForm(Model model,@ModelAttribute("adModel1") @Valid Advertisment adModel1, BindingResult result) {
+                    
 		model.addAttribute("adModel1",adModel1);
 		String returnVal = "successForm";
 		if(result.hasErrors()) {
 			returnVal = "pages/home/advancedSearch";
 		} else {
                 model.addAttribute("adModel1", adModel1);
-                
+               AdvertismentDaoImpl adDAO=null;
+                adDAO.searchAdvertisement(adModel1);
+              
                 }		
-		return returnVal;
+		return adModel1;
 	}   
 
 }
