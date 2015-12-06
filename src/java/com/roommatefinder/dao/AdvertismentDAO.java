@@ -7,6 +7,7 @@ package com.roommatefinder.dao;
 
 import com.roommatefinder.model.Advertisment;
 import java.sql.Connection;
+import java.sql.ResultSet;
 
 
 
@@ -22,4 +23,6 @@ public interface AdvertismentDAO {
     public Advertisment findByAdvertismentId(int adId);
     
     public Connection getConnection();
+    
+    public ResultSet searchAdvertisement(Advertisment amodel);
 }

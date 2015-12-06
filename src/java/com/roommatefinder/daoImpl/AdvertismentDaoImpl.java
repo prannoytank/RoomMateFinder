@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,22 +89,23 @@ public class AdvertismentDaoImpl implements AdvertismentDAO{
     @Override
     public ResultSet searchAdvertisement(Advertisment adModel1){
        ResultSet rs=null;
-        try{
+       
+     try{
      Connection con= ConnectionFactory.getConnection();
-     Statement stmt=null;
-     String query=null;
-     String postalCode=adModel1.getPostalCode();
-     if (postalCode==null){
-        query="Select * from Advertisement where 'STREETADDRESS'='"+adModel1.getStreetAddress()+"'" ;
-     }else{
-         query="Select * from Advertisement where 'POSTALCODE'='"+adModel1.getPostalCode()+"'" ;
-     }
-     stmt=con.createStatement();
-    rs= stmt.executeQuery(query);
-     while(rs.next()){
-         int id =rs.getInt("ADID");
-         System.out.println("id is "+id);
-     }
+     String query="Select * from Advertisement where CITY=? and BUILDINGTYPE=? and NOOFROOMS = ? and GENDER=? and PETLOVER=? and DIET=? and SMOKER = ? and ALCOHOL=?" ;
+     PreparedStatement preparedStatement = con.prepareStatement(query);
+     
+     preparedStatement.setString(1,adModel1.getCity() );
+     preparedStatement.setString(2,adModel1.getBuildingType() );
+     preparedStatement.setInt(3,adModel1.getNoOfRooms() );
+     preparedStatement.setString(4,adModel1.getGender() );
+     preparedStatement.setString(5,adModel1.getPet() );
+     preparedStatement.setString(6,adModel1.getDiet() );
+     preparedStatement.setString(7,adModel1.getSmoke());
+     preparedStatement.setString(8,adModel1.getAlcohol());
+     
+     rs= preparedStatement.executeQuery();
+        System.out.println(query); 
      }catch(Exception e){
          
      }
