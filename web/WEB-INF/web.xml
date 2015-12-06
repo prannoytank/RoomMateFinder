@@ -4,9 +4,9 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext.xml</param-value>
     </context-param>
-    <listener>
+    <!--<listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener> 
+    </listener> -->
     <!-- Dispatcher servlet config -->
     <!-- every user request first goes to the FrontController-servlet --> 
     <servlet>

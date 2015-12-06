@@ -6,11 +6,8 @@
 package com.roommatefinder.controller;
 
 import java.io.IOException;
-import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -26,7 +23,7 @@ public class IntialController {
         return new ModelAndView("jsp/index");
     }
 
-    @RequestMapping("/home") // accepts url which has the context root path
+    @RequestMapping("/home") // For User Home Page
     public ModelAndView homePage() throws IOException {
 
         return new ModelAndView("pages/home/home");
