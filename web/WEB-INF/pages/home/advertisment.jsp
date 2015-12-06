@@ -13,11 +13,7 @@
     <form:form method="POST" commandName="adModel">
         <fieldset>
             <legend>Location Details</legend>
-
             <div class="row">  
-
-
-
                 <div class="col-md-4" >	
                     <label for="country">Country</label>
                     <form:input path="country" class="form-control" type="text" id="country"/>
@@ -30,9 +26,11 @@
                     <form:errors path="province" class="form-control" cssStyle="color: #ff0000;"/>
                 </div>
 
-                <div class="col-md-4" >	
-                    <label for="city">City</label>
-                    <form:input path="city" class="form-control" type="text" id="city"/>
+                  <div class="col-md-4" >	
+                    <label for="city">City:</label>
+                    <form:select path="city">
+                        <form:options items="${cities}"  />
+                    </form:select>
                     <form:errors path="city" class="form-control" cssStyle="color: #ff0000;"/>
                 </div>
 
@@ -58,7 +56,7 @@
                     <label for="buildingType">Building Type</label>
                     <form:input path="buildingType" class="form-control" type="text" id="buildingType"/>
                     <form:errors path="buildingType" class="form-control" cssStyle="color: #ff0000;"/>
-                </div>    
+                </div>   
 
                 <div class="col-md-6"> 
                     <label for="roomType">Room Type</label>
@@ -66,9 +64,11 @@
                     <form:errors path="roomType" class="form-control" cssStyle="color: #ff0000;"/>
                 </div>
 
-                <div class="col-md-6"> 
-                    <label for="noOfRooms">Rooms to Rent</label>
-                    <form:input path="noOfRooms" class="form-control" type="text" id="noOfRooms"/>
+               <div class="col-md-4" >	
+                    <label for="noOfRooms">Number of Rooms:</label>
+                    <form:select path="noOfRooms">
+                        <form:options items="${noOfRooms}"  />
+                    </form:select>
                     <form:errors path="noOfRooms" class="form-control" cssStyle="color: #ff0000;"/>
                 </div>
                 
@@ -101,7 +101,7 @@
                 </div> 
                     
                 <div class="col-md-6">
-                    <label for="pet">Pet Allowed</label>   
+                    <label for="pet">Pet Friendly</label>   
                     <label class="checkbox-inline">
                      <form:radiobutton path="pet" value="Y"/>Yes 
                     </label>

@@ -8,6 +8,8 @@ package com.roommatefinder.controller;
 import com.roommatefinder.daoImpl.AdvertismentDaoImpl;
 import com.roommatefinder.model.Advertisment;
 import com.roommatefinder.validator.AdvertismentValidator;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-
 /**
  *
  * @author AshirwadTank
@@ -35,23 +36,21 @@ public class AdvertismentController {
     //@Autowired
     // @Qualifier("formValidator")
     // private Validator validator;
-    
-     @Autowired
+    @Autowired
     @Qualifier("advertismentValidator")
     private AdvertismentValidator validator;
-    
+
     @InitBinder
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
     }
-    
-    
+
     @RequestMapping(method = RequestMethod.GET)
     public String initForm(Model model) {
         Advertisment adModel = new Advertisment();
 
         model.addAttribute("adModel", adModel);
-
+        initModelList(model);
         return "pages/home/advertisment";
     }
     
