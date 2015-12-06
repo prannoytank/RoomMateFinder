@@ -5,6 +5,7 @@
  */
 package com.roommatefinder.controller;
 
+import com.roommatefinder.daoImpl.AdvertismentDaoImpl;
 import com.roommatefinder.model.Advertisment;
 import com.roommatefinder.validator.AdvertismentValidator;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -51,22 +53,28 @@ public class AdvertismentController {
         initModelList(model);
         return "pages/home/advertisment";
     }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String submitForm(Model model, @ModelAttribute("adModel") @Valid Advertisment adModel, BindingResult result) {
-
-        model.addAttribute("adModel", adModel);
-        String returnVal = "successForm";
-        if (result.hasErrors()) {
-            returnVal = "pages/home/advertisment";
-        } else {
-            model.addAttribute("adModel", adModel);
-
-        }
-        return returnVal;
-    }
-
-    private void initModelList(Model model) {
+    
+    
+        @RequestMapping(method = RequestMethod.POST)
+	public ModelAndView submitForm(Model model,@ModelAttribute("adModel") @Valid Advertisment adModel, BindingResult result) {
+              
+		model.addAttribute("adModel",adModel);
+		ModelAndView welcomeModel = new ModelAndView("index");
+		if(result.hasErrors()) {
+                    welcomeModel = new ModelAndView("pages/home/advertisment");
+			return welcomeModel;
+		} else {
+                  
+                    AdvertismentDaoImpl adi = new AdvertismentDaoImpl();
+                    int getAdId = adi.insert(adModel);
+                   
+			//model.addAttribute("adModel", adModel);
+                        
+		}		
+		return welcomeModel;
+	}   
+        
+        private void initModelList(Model model) {
 
         List<String> cities = new ArrayList<String>();
         cities.add("Toronto");

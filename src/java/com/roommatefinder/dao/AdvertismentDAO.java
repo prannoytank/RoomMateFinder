@@ -6,18 +6,20 @@
 package com.roommatefinder.dao;
 
 import com.roommatefinder.model.Advertisment;
-import java.sql.ResultSet;
-import java.util.Map;
+import java.sql.Connection;
+
+
 
 /**
  *
  * @author AshirwadTank
  */
 public interface AdvertismentDAO {
+    
 
-    public void insert(Advertisment customer);
+    public int insert(Advertisment customer);
 
     public Advertisment findByAdvertismentId(int adId);
     
-    public ResultSet searchAdvertisement(Advertisment amodel);
+    public Connection getConnection();
 }

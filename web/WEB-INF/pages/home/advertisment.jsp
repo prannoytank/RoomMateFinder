@@ -75,8 +75,6 @@
                 </div>
 
             </div>   
-
-
         </fieldset>
 
         <fieldset>
@@ -106,9 +104,7 @@
                     </label>
                     
                 </div>
-                    
-                 
-                    
+                       
                 <div class="col-md-4">
                     <label for="diet">Diet</label>   
                     <label class="checkbox-inline">
@@ -145,14 +141,7 @@
                     </label>
                     
                 </div>     
-                    
-                    
-                    
-                    
-
             </div>
-
-
         </fieldset>
 
         <div class="row">
