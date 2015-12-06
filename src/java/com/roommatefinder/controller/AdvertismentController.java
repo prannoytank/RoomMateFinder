@@ -5,6 +5,7 @@
  */
 package com.roommatefinder.controller;
 
+import com.roommatefinder.daoImpl.AdvertismentDaoImpl;
 import com.roommatefinder.model.Advertisment;
 import com.roommatefinder.validator.AdvertismentValidator;
 import javax.validation.Valid;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 
 /**
@@ -54,20 +56,23 @@ public class AdvertismentController {
     }
     
     
- @RequestMapping(method = RequestMethod.POST)
-	public String submitForm(Model model,@ModelAttribute("adModel") @Valid Advertisment adModel, BindingResult result) {
+        @RequestMapping(method = RequestMethod.POST)
+	public ModelAndView submitForm(Model model,@ModelAttribute("adModel") @Valid Advertisment adModel, BindingResult result) {
               
 		model.addAttribute("adModel",adModel);
-		String returnVal = "successForm";
+		ModelAndView welcomeModel = new ModelAndView("index");
 		if(result.hasErrors()) {
-			returnVal = "pages/home/advertisment";
+                    welcomeModel = new ModelAndView("pages/home/advertisment");
+			return welcomeModel;
 		} else {
                   
-                    
-			model.addAttribute("adModel", adModel);
+                    AdvertismentDaoImpl adi = new AdvertismentDaoImpl();
+                    int getAdId = adi.insert(adModel);
+                   
+			//model.addAttribute("adModel", adModel);
                         
 		}		
-		return returnVal;
+		return welcomeModel;
 	}   
 
 }

@@ -54,22 +54,28 @@
         <fieldset>
             <legend>House Details</legend>   
             <div class="row">
-                <div class="col-md-4"> 
+                <div class="col-md-6"> 
                     <label for="buildingType">Building Type</label>
                     <form:input path="buildingType" class="form-control" type="text" id="buildingType"/>
                     <form:errors path="buildingType" class="form-control" cssStyle="color: #ff0000;"/>
                 </div>    
 
-                <div class="col-md-4"> 
+                <div class="col-md-6"> 
                     <label for="roomType">Room Type</label>
                     <form:input path="roomType" class="form-control" type="text" id="roomType"/>
                     <form:errors path="roomType" class="form-control" cssStyle="color: #ff0000;"/>
                 </div>
 
-                <div class="col-md-4"> 
+                <div class="col-md-6"> 
                     <label for="noOfRooms">Rooms to Rent</label>
                     <form:input path="noOfRooms" class="form-control" type="text" id="noOfRooms"/>
                     <form:errors path="noOfRooms" class="form-control" cssStyle="color: #ff0000;"/>
+                </div>
+                
+                <div class="col-md-6"> 
+                    <label for="rent">Rent</label>
+                    <form:input path="rent" class="form-control" type="text" id="rent"/>
+                    <form:errors path="rent" class="form-control" cssStyle="color: #ff0000;"/>
                 </div>
 
             </div>   
@@ -142,15 +148,12 @@
                         <form:radiobutton path="alcohol" value="N"/>No
                     </label>
                     
-                </div>     
+                </div> 
+                  <label for="description">Note</label>      
+                  <form:textarea path="description" class="form-control" rows="5" cols="30" />
+                  <form:errors path="description" class="form-control" cssStyle="color: #ff0000;"/>  
                     
-                    
-                    
-                    
-
             </div>
-
-
         </fieldset>
 
         <div class="row">

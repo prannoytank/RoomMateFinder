@@ -14,6 +14,7 @@ public class Advertisment {
     private int adId;
     private String adPostDate;
     private int userId;
+    private String adTitle;
     private String streetAddress;
     private String country;
     private String province;
@@ -31,12 +32,15 @@ public class Advertisment {
     private String roomType;
     private int noOfRooms;
     private String description;
-    
-    
-    
-    
-   
 
+    public String getAdTitle() {
+        return adTitle;
+    }
+
+    public void setAdTitle(String adTitle) {
+        this.adTitle = adTitle;
+    }
+    
     public int getAdId() {
         return adId;
     }
@@ -160,10 +164,6 @@ public class Advertisment {
         this.alcohol = alcohol;
     }
 
-   
-
-    
-
     public double getRent() {
         return rent;
     }
@@ -202,8 +202,5 @@ public class Advertisment {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    
-    
+    }   
 }

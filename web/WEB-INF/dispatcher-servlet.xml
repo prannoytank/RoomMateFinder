@@ -32,7 +32,9 @@
 	</bean> 
         
     <bean id="advertismentValidator" class="com.roommatefinder.validator.AdvertismentValidator" />
-
+     
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+    
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         
         <property name="prefix" value="/WEB-INF/" />
