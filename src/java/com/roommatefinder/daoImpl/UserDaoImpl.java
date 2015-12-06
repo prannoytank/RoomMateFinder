@@ -105,7 +105,7 @@ Connection connection;
 @Override
     public boolean isValidate(User user){
         connection=ConnectionFactory.getConnection();
-        System.out.println("inside");
+        
                 
         String query = "SELECT * FROM USERMASTER WHERE EMAIL=?";
     try {
@@ -115,12 +115,13 @@ Connection connection;
         ResultSet rs = ps.executeQuery();
         if(rs.next())
         {
-            System.out.println("inside rs");
+            
             String encPass = rs.getString("PASSWORD");
             
             BCryptPasswordEncoder passencode= new BCryptPasswordEncoder();
             if(passencode.matches(user.getPassword(), encPass)){
                 return true;
+                
             }
             else
             {
@@ -138,4 +139,40 @@ Connection connection;
         
         return false;
     }
+
+    @Override
+    public User getUsers(String email) {
+        User newuser = new User();
+        connection = ConnectionFactory.getConnection();
+        String query = "SELECT * FROM USERMASTER WHERE EMAIL=?";
+    try {
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+        
+        if(rs.next()){
+            
+            newuser.setId(rs.getDouble("USERID"));
+            newuser.setActive(rs.getString("ACTIVE"));
+            newuser.setCity(rs.getString("CITY"));
+            newuser.setContact(rs.getDouble("CONTACT"));
+            newuser.setCountry(rs.getString("COUNTRY"));
+            newuser.setDateOfBirth(rs.getDate("DATEOFBIRTH"));
+            newuser.setEmail(rs.getString("EMAIL"));
+            newuser.setGender(rs.getString("GENDER"));
+            newuser.setName(rs.getString("FULLNAME"));
+            newuser.setPostalCode(rs.getString("POSTALCODE"));
+            newuser.setProvince(rs.getString("PROVINCE"));
+            newuser.setStreetAddress(rs.getString("STREETADDRESS"));
+        }
+        return newuser;
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(UserDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return null;
+    }
+    
+    
+    
 }

@@ -20,7 +20,7 @@ public class User implements Serializable{
     @NotNull
     @NotEmpty(message = "Please enter your name")
     private String name;
-    
+    private double id;
     @NotNull
     @NotEmpty(message = "Please enter a password")
     @Size(min = 6, max = 15, message = "Your password must between 6 and 15 characters")
@@ -42,6 +42,14 @@ public class User implements Serializable{
     private String city;
     private String postalCode;
     private String active;
+
+    public double getId() {
+        return id;
+    }
+
+    public void setId(double id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
