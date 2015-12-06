@@ -6,6 +6,8 @@
 package com.roommatefinder.dao;
 
 import com.roommatefinder.model.User;
+import java.sql.ResultSet;
+import org.springframework.ui.Model;
 
 /**
  *
@@ -17,4 +19,6 @@ public interface UserDAO {
     public boolean check(User user);
     public boolean check(String email);
     public boolean isValidate(User user);
+    public ResultSet getUserSettings(int userid);
+    public int updateSettings(int userId,User userModel); 
 }

@@ -35,7 +35,7 @@ public class User implements Serializable{
     private String email;
     private String gender;
     private Date dateOfBirth;
-    private double contact;
+    private String contact;
     private String streetAddress;
     private String country;
     private String province;
@@ -91,11 +91,11 @@ public class User implements Serializable{
         this.dateOfBirth = dateOfBirth;
     }
 
-    public double getContact() {
+    public String getContact() {
         return contact;
     }
 
-    public void setContact(double contact) {
+    public void setContact(String contact) {
         this.contact = contact;
     }
 

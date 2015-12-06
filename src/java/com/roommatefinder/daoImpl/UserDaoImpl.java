@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
 
 
 /**
@@ -100,6 +101,48 @@ Connection connection;
     return false;
     }
     
+    @Override
+    public ResultSet getUserSettings(int userId){
+        ResultSet rs=null;
+       
+     try{
+     Connection con= ConnectionFactory.getConnection();
+     String query="Select FULLNAME, GENDER, CONTACT, EMAIL, POSTALCODE, STREETADDRESS,COUNTRY,PROVINCE, CITY, ACTIVE from USERMASTER where USERID=?" ;
+     PreparedStatement preparedStatement = con.prepareStatement(query);
+     
+     preparedStatement.setInt(1,userId );
+     
+     rs= preparedStatement.executeQuery();
+     }catch(Exception e){
+         
+     }
+     
+     return rs;  
+    
+    }
+    @Override
+    public int updateSettings(int userId, User userModel){
+     int ps=0;
+     try{
+     Connection con= ConnectionFactory.getConnection();
+     String query="Update USERMASTER set COUNTRY=?, STREETADDRESS=?, PROVINCE=?, CITY=?, POSTALCODE=?, CONTACTNUMBER=? where USERID=?";
+     PreparedStatement preparedStatement = con.prepareStatement(query);
+     
+     preparedStatement.setString(1,userModel.getCountry() );
+     preparedStatement.setString(2,userModel.getStreetAddress() );
+     preparedStatement.setString(3,userModel.getProvince() );
+     preparedStatement.setString(4,userModel.getCity() );
+     preparedStatement.setString(5,userModel.getPostalCode() );
+     preparedStatement.setString(6,userModel.getContact() );
+     preparedStatement.setInt(7,userId );
+     
+     ps= preparedStatement.executeUpdate();
+     }catch(Exception e){
+         
+     }
+   
+    return ps;
+    }
     
     
 @Override

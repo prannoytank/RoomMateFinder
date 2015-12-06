@@ -13,100 +13,59 @@
 <jsp:include page="includes/header.jsp" />
 
 <div id="content-wrapper" class="container-fluid">
-    <form:form method="POST" commandName="settingsModel">
+    <form:form method="POST" commandName="userModel">
         <fieldset>
-            <legend>Settings</legend>
+            <legend>SETTINGS</legend>
+                <legend>Name : ${userModel.getName()}</legend>
+                 <legend>Email : ${userModel.getEmail()}</legend>
+            
             <div class="row">  
-                 <div class="col-md-4" >	
-                    <label for="country">Country</label>
-                    <form:input path="country" class="form-control" type="text" value = "${country}" id="country"/>
+                <div class="col-md-4" >	
+                    <label for="country">Country:</label>
+                    <form:input path="country" class="form-control" type="text" value = "${userModel.getCountry()}" id="country"/>
                     <form:errors path="country" class="form-control" cssStyle="color: #ff0000;"/>
                 </div>
 
                 <div class="col-md-4" >	
-                    <label for="">Building Type:</label>
-                    <form:select path="buildingType">
-                        <form:options items="${buildingType}"  />
-                    </form:select>
-                    <form:errors path="buildingType" class="form-control" cssStyle="color: #ff0000;"/>
+                    <label for="streetAddress">Street Address:</label>
+                    <form:input path="streetAddress" class="form-control" type="text" value = "${userModel.getStreetAddress()}" id="streetAddress"/>
+                    <form:errors path="streetAddress" class="form-control" cssStyle="color: #ff0000;"/>
+                </div>
+            </div>
+            <br/>
+            <div class="row">  
+                <div class="col-md-4" >	
+                    <label for="province">Province:</label>
+                    <form:input path="province" class="form-control" type="text" value = "${userModel.getProvince()}" id="province"/>
+                    <form:errors path="province" class="form-control" cssStyle="color: #ff0000;"/>
                 </div>
 
                 <div class="col-md-4" >	
-                    <label for="noOfRooms">Number of Rooms:</label>
-                    <form:select path="noOfRooms">
-                        <form:options items="${noOfRooms}"  />
-                    </form:select>
-                    <form:errors path="noOfRooms" class="form-control" cssStyle="color: #ff0000;"/>
+                    <label for="city">City:</label>
+                    <form:input path="city" class="form-control" type="text" value = "${userModel.getCity()}" id="city"/>
+                    <form:errors path="city" class="form-control" cssStyle="color: #ff0000;"/>
                 </div>
-            </div> 
-            <legend>Preferences</legend>
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="gender">Gender</label>   
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="gender" value="M"/>Male 
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="gender" value="F"/>Female
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="gender" value="O"/>Other
-                    </label>  
-                </div> 
-
-                <div class="col-md-4">
-                    <label for="pet">Pet Friendly</label>   
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="pet" value="Y"/>Yes 
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="pet" value="N"/>No
-                    </label>
-
-                </div>
-
-                <div class="col-md-4">
-                    <label for="diet">Diet</label>   
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="diet" value="Veg"/>Vegetarian
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="diet" value="Non-Veg"/>Non-Vegetarian
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="diet" value="Vegan"/>Vegan
-                    </label>
-
-                </div> 
             </div>
             <br/>
-            <div class="row">
+            <div class="row">  
+                <div class="col-md-4" >	
+                    <label for="postalCode">Postal Code:</label>
+                    <form:input path="postalCode" class="form-control" type="text" value = "${userModel.getPostalCode()}" id="postalCode"/>
+                    <form:errors path="postalCode" class="form-control" cssStyle="color: #ff0000;"/>
+                </div>
+                
+                  <div class="col-md-4" >	
+                    <label for="contact">Contact Number:</label>
+                    <form:input path="contact" class="form-control" type="text" value = "${userModel.getContact()}" id="contact"/>
+                    <form:errors path="contact" class="form-control" cssStyle="color: #ff0000;"/>
+                </div>
 
-                <div class="col-md-4">
-                    <label for="smoke">Smoker</label>   
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="smoke" value="Y"/>Yes 
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="smoke" value="N"/>No
-                    </label>
-
-                </div> 
-
-                <div class="col-md-4">
-                    <label for="alcohol">Alcohol</label>   
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="alcohol" value="Y"/>Yes 
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="alcohol" value="N"/>No
-                    </label>
-                </div>     
-            </div>   
+                </div>
+               
         </fieldset>
         <br/>
         <div class="row">
-            <input type="submit" name="submit" class="btn btn-success" value="Search">
+            <input type="submit" name="submit" class="btn btn-success" value="UPDATE">
         </div>
     </form:form>
 </div>                                       

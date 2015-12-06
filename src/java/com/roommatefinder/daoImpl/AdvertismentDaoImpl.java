@@ -88,7 +88,7 @@ public class AdvertismentDaoImpl implements AdvertismentDAO{
     
     @Override
     public ResultSet searchAdvertisement(Advertisment adModel1){
-       ResultSet rs=null;
+    ResultSet rs=null;
        
      try{
      Connection con= ConnectionFactory.getConnection();
@@ -105,7 +105,6 @@ public class AdvertismentDaoImpl implements AdvertismentDAO{
      preparedStatement.setString(8,adModel1.getAlcohol());
      
      rs= preparedStatement.executeQuery();
-        System.out.println(query); 
      }catch(Exception e){
          
      }
