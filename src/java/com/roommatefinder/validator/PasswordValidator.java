@@ -27,10 +27,15 @@ public class PasswordValidator implements Validator{
 	public void validate(Object target, Errors errors) {
 
 		User user = (User)target;
-		
-		if(!(user.getPassword().equals(user.getPassconf()))){
-			errors.rejectValue("password", "notmatch.password");
-		}
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "user.password");
+                ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "user.name");
+                ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "user.email");
+                ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passconf", "user.passwordConfDiff");
+                   
+                    if(!(user.getPassword().equals(user.getPassconf()))){
+                            errors.rejectValue("passconf", "user.passwordConfDiff");
+                    }
+                
 		
 	}
 	

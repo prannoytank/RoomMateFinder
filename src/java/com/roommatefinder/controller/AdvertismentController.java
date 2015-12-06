@@ -34,7 +34,7 @@ public class AdvertismentController {
     // @Qualifier("formValidator")
     // private Validator validator;
     
-     @Autowired
+    @Autowired
     @Qualifier("advertismentValidator")
     private AdvertismentValidator validator;
     

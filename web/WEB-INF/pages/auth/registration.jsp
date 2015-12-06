@@ -10,20 +10,18 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page session="false"%>
-<html>
-    <head>
+
         <jsp:include page="../index/includes/head.jsp" />
         <jsp:include page="../index/includes/header.jsp" />
-        <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+            
         <title>Registration</title>
-    </head>
     <body>
         <H1>
             <div class="text-center">
            	<div class="logo">Registration</div>
                 </div>
         </H1>
-        <form:form modelAttribute="user" action="register" method="POST" enctype="utf8" cssClass="form-horizontal">
+        <form:form commandName="user" action="register" method="POST" enctype="utf8" cssClass="form-horizontal">
             
             <div class="form-group">
                 <label class="col-md-4 control-label">Name</label>
@@ -36,10 +34,14 @@
                 
                 
             <div class="form-group">
+            
                 <label class="col-md-4 control-label">Email</label>
                     
                 <div class="col-md-6">
                     <form:input path="email" value="" cssClass="form-control"/>
+                    <c:if test="${message != null}">
+                        <div class="alert alert-danger">${message}</div>
+                    </c:if>
                     <form:errors path="email" element="div" cssClass="alert alert-danger"/>
                 </div>
             </div>
@@ -77,7 +79,5 @@
             Login?
         </a>
     </body>
-    <footer>
+   
         <jsp:include page="../index/includes/footer.jsp" />
-    </footer>
-</html>

@@ -5,42 +5,61 @@
  */
 package com.roommatefinder.controller;
 
+import com.roommatefinder.daoImpl.UserDaoImpl;
 import com.roommatefinder.model.User;
-import com.roommatefinder.utils.ConnectionFactory;
+import com.roommatefinder.validator.PasswordValidator;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Locale;
+import javax.servlet.http.HttpServletRequest;
 
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
  * @author Crusty
  */
 @Controller
+@RequestMapping("/register")
 public class RegistrationController {
      
     Connection connection;
+     UserDaoImpl userInsert;
+     
+    @Autowired
+    @Qualifier("passwordValidator")
+    private PasswordValidator  validator;
+    
+    
+    @InitBinder
+    private void initBinder(WebDataBinder binder) {
+        binder.setValidator(validator);
+    }
+    
     
   
     
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView showIndex() {
         System.out.println("Testing index");
-        return new ModelAndView("/index/index");
+        return new ModelAndView("/pages/index/index");
     }
     
-   @RequestMapping(value = "/register", method = RequestMethod.GET)
+   @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showForm() {
         return new ModelAndView("/auth/registration", "user", new User());
     }
@@ -48,35 +67,37 @@ public class RegistrationController {
     
  
     
-    @RequestMapping(value = "register", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String submit(@Valid @ModelAttribute("user")User user,BindingResult result, ModelMap model) {
+        
+         userInsert = new UserDaoImpl();
         if (result.hasErrors()) {
             return "/auth/registration";
         }
-       String pass = user.getPassword();
-        if(pass.equals(user.getPassconf())){
-                    connection = ConnectionFactory.getConnection();
-                    String query = "INSERT INTO(FULLNAME,EMAIL,PASSWORD) VALUES(?,?,?)";
-            try {
-                PreparedStatement ps = connection.prepareStatement(query);
-                ps.setString(1, user.getName());
-                ps.setString(2, user.getEmail());
-                ps.setString(3, encryptPass(user.getPassword()));
-                ps.execute();
-            } catch (SQLException ex) {
-                Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
+        System.out.println("inside submit");
+      
+            if(userInsert.check(user)){
+                userInsert.insert(user);
+                model.addAttribute("message",null);
             }
+            else
+            {
+               model.addAttribute("message","Email already exist");
+                System.out.println("FAILL!!!!!");
+            }
+              
                     
               model.addAttribute("name", user.getName());
               model.addAttribute("email", user.getEmail());
               model.addAttribute("password", user.getPassword());
-              return "auth/userviewtemp";
+              
+              
+              //System.out.print(encoder.matches(pass,pass));
+              
+              return "auth/registration";
         }
-        else
-        {
-            model.addAttribute("error","Password don't match!");
-            return "/auth/registration";
-        }
+    
+   
       
     }
     
@@ -107,15 +128,9 @@ public @interface ValidEmail {
         
     } */
     
-    protected String encryptPass(String pass){
-            
-        BCryptPasswordEncoder passencode= new BCryptPasswordEncoder();
-        String hashedPassword = passencode.encode(pass);
-        return hashedPassword;
+    
 
-     }
 
-}
 
 
 

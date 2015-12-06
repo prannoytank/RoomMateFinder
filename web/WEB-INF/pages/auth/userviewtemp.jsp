@@ -26,6 +26,11 @@
             <td>password :</td>
             <td>${password}</td>
         </tr>
+        
+        <tr>
+            <td>error :</td>
+            <td>${error}</td>
+        </tr>
     </table>
 </body>
 </html>
