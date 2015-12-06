@@ -10,6 +10,7 @@ import com.roommatefinder.model.User;
 import com.roommatefinder.validator.PasswordValidator;
 import java.sql.Connection;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +48,15 @@ public class RegistrationController {
     
    
    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView showForm() {
-        return new ModelAndView("/pages/auth/registration", "user", new User());
+    public ModelAndView showForm(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if(session.getAttribute("users")==null){
+            return new ModelAndView("pages/auth/registration", "user", new User());
+        }
+        else
+        {
+            return new ModelAndView("redirect:/home");
+        }
     }
  
     
@@ -67,7 +75,7 @@ public class RegistrationController {
                 userInsert.insert(user);
                 
                 model.addAttribute("message",null);
-                mod.setViewName("pages/home/home");
+                mod.setViewName("redirect:/login");
                 
                return mod;
             }
@@ -75,8 +83,8 @@ public class RegistrationController {
             {
                model.addAttribute("message","Email already exist");
                
-                System.out.println("FAILL!!!!!");
-                return new ModelAndView("/pages/auth/registration");
+                
+                return new ModelAndView("pages/auth/registration");
             }
   
               

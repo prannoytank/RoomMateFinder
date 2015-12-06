@@ -17,10 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class IntialController {
 
-    @RequestMapping("/") // accepts url which has the context root path
+    @RequestMapping({"/","/index"}) // accepts url which has the context root path
     public ModelAndView landingPage() throws IOException {
 
-        return new ModelAndView("jsp/index");
+        return new ModelAndView("pages/index/index");
     }
 
     @RequestMapping("/home") // For User Home Page
