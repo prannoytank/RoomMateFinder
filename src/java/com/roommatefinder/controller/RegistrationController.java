@@ -9,14 +9,11 @@ import com.roommatefinder.daoImpl.UserDaoImpl;
 import com.roommatefinder.model.User;
 import com.roommatefinder.validator.PasswordValidator;
 import java.sql.Connection;
-import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.MessageSource;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -25,9 +22,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -50,54 +45,44 @@ public class RegistrationController {
         binder.setValidator(validator);
     }
     
-    
-  
-    
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView showIndex() {
-        System.out.println("Testing index");
-        return new ModelAndView("/pages/index/index");
-    }
-    
+   
    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showForm() {
-        return new ModelAndView("/auth/registration", "user", new User());
+        return new ModelAndView("/pages/auth/registration", "user", new User());
     }
  
     
  
     
     @RequestMapping(method = RequestMethod.POST)
-    public String submit(@Valid @ModelAttribute("user")User user,BindingResult result, ModelMap model) {
+    public ModelAndView submit(@Valid @ModelAttribute("user")User user,BindingResult result, ModelMap model,HttpServletRequest request) {
         
+        ModelAndView mod = new ModelAndView();
          userInsert = new UserDaoImpl();
         if (result.hasErrors()) {
-            return "/auth/registration";
+            return new ModelAndView( "/pages/auth/registration");
         }
-        System.out.println("inside submit");
       
             if(userInsert.check(user)){
                 userInsert.insert(user);
+                
                 model.addAttribute("message",null);
+                mod.setViewName("pages/home/home");
+                
+               return mod;
             }
             else
             {
                model.addAttribute("message","Email already exist");
+               
                 System.out.println("FAILL!!!!!");
+                return new ModelAndView("/pages/auth/registration");
             }
+  
               
-                    
-              model.addAttribute("name", user.getName());
-              model.addAttribute("email", user.getEmail());
-              model.addAttribute("password", user.getPassword());
-              
-              
-              //System.out.print(encoder.matches(pass,pass));
-              
-              return "auth/registration";
-        }
-    
-   
+         
+        
+    }
       
     }
     

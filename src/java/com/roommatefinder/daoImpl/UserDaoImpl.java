@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+
 /**
  *
  * @author Crusty
@@ -44,9 +45,10 @@ Connection connection;
         
     }
     
+@Override
     public boolean check(User user){
         connection=ConnectionFactory.getConnection();
-        String query = "SELECT COUNT(USERID) FROM USERMASTER WHERE UEMAIL LIKE ?";
+        String query = "SELECT COUNT(USERID) FROM USERMASTER WHERE EMAIL LIKE ?";
     try {
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, user.getEmail());
@@ -77,7 +79,7 @@ Connection connection;
     @Override
     public boolean check(String email) {
            connection=ConnectionFactory.getConnection();
-        String query = "SELECT COUNT(USERID) FROM USERMASTER WHERE UEMAIL LIKE ?";
+        String query = "SELECT COUNT(USERID) FROM USERMASTER WHERE EMAIL LIKE ?";
     try {
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, email);
@@ -85,16 +87,55 @@ Connection connection;
         if(rs.next()){
            int val = rs.getInt(1);
            if(val==0){
-               return true;
+               return false;
            }
            else
            {
-               return false;
+               return true;
            }
         }
     } catch (SQLException ex) {
         Logger.getLogger(UserDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
     }
     return false;
+    }
+    
+    
+    
+@Override
+    public boolean isValidate(User user){
+        connection=ConnectionFactory.getConnection();
+        System.out.println("inside");
+                
+        String query = "SELECT * FROM USERMASTER WHERE EMAIL=?";
+    try {
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setString(1, user.getEmail());
+        
+        ResultSet rs = ps.executeQuery();
+        if(rs.next())
+        {
+            System.out.println("inside rs");
+            String encPass = rs.getString("PASSWORD");
+            
+            BCryptPasswordEncoder passencode= new BCryptPasswordEncoder();
+            if(passencode.matches(user.getPassword(), encPass)){
+                return true;
+            }
+            else
+            {
+                System.out.println("fail pass test");
+                return false;
+            }
+            
+        }
+        else
+            return false;
+        
+    } catch (SQLException ex) {
+        Logger.getLogger(UserDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        
+        return false;
     }
 }

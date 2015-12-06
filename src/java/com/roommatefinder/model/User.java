@@ -5,6 +5,7 @@
  */
 package com.roommatefinder.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -15,7 +16,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  *
  * @author Crusty
  */
-public class User {
+public class User implements Serializable{
     @NotNull
     @NotEmpty(message = "Please enter your name")
     private String name;

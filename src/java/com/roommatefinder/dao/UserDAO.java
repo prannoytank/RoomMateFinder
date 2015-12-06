@@ -16,4 +16,5 @@ public interface UserDAO {
     public int insert(User user);
     public boolean check(User user);
     public boolean check(String email);
+    public boolean isValidate(User user);
 }
