@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -53,28 +54,38 @@ public class AdvertismentController {
         initModelList(model);
         return "pages/home/advertisment";
     }
-    
-    
-        @RequestMapping(method = RequestMethod.POST)
-	public ModelAndView submitForm(Model model,@ModelAttribute("adModel") @Valid Advertisment adModel, BindingResult result) {
-              
-		model.addAttribute("adModel",adModel);
-		ModelAndView welcomeModel = new ModelAndView("index");
-		if(result.hasErrors()) {
-                    welcomeModel = new ModelAndView("pages/home/advertisment");
-			return welcomeModel;
-		} else {
-                  
-                    AdvertismentDaoImpl adi = new AdvertismentDaoImpl();
-                    int getAdId = adi.insert(adModel);
-                   
-			//model.addAttribute("adModel", adModel);
-                        
-		}		
-		return welcomeModel;
-	}   
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ModelAndView submitForm(Model model, @ModelAttribute("adModel") @Valid Advertisment adModel, BindingResult result) {
+
+        model.addAttribute("adModel", adModel);
+        ModelAndView welcomeModel = new ModelAndView("pages/home/uploadFile");
+        if (result.hasErrors()) {
+            welcomeModel = new ModelAndView("pages/home/advertisment");
+            return welcomeModel;
+        } else {
+
+            AdvertismentDaoImpl adi = new AdvertismentDaoImpl();
+            int adId = adi.insert(adModel);
+            
+            
+	   model.addAttribute("adId", adId);
+        }
+        return welcomeModel;
+    }
+
+    @RequestMapping(value = "/view/{adId}", method = RequestMethod.GET)
+    public ModelAndView advertismentDetail(Model model, @PathVariable("adId") int adId,@Valid Advertisment adModel, BindingResult result) {
         
-        private void initModelList(Model model) {
+        AdvertismentDaoImpl adi = new AdvertismentDaoImpl();
+        
+        Advertisment adBean = adi.findByAdvertismentId(adId);
+        initModelList(model);
+        model.addAttribute("adModel",adBean);
+        return new ModelAndView("pages/home/advertisementDetail");
+    }
+
+    private void initModelList(Model model) {
 
         List<String> cities = new ArrayList<String>();
         cities.add("Toronto");

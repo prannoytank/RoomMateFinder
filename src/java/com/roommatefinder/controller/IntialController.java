@@ -41,8 +41,14 @@ public class IntialController {
     }
 
     @RequestMapping("/home") // For User Home Page
-    public ModelAndView homePage() throws IOException {
+    public ModelAndView homePage(Model modelList,HttpServletRequest request) throws IOException {
 
+        AdvertismentDaoImpl adi = new AdvertismentDaoImpl();
+        
+        List<Advertisment> adList = adi.findByUserId(1);
+         System.out.println(adList.size());
+        modelList.addAttribute("advertisementList",adList);
+        
         return new ModelAndView("pages/home/home");
     }
 

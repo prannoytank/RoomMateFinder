@@ -94,5 +94,7 @@ public class AdvancedSearchController {
 
         return "pages/home/advancedSearch";
     }
-
+ 
+ 
+ 
 }

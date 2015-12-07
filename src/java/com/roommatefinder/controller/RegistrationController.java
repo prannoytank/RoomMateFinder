@@ -11,7 +11,6 @@ import com.roommatefinder.validator.PasswordValidator;
 import java.io.File;
 import java.sql.Connection;
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -35,110 +34,75 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/register")
 public class RegistrationController {
-     
+
     Connection connection;
-     UserDaoImpl userInsert;
-     
+    UserDaoImpl userInsert;
+
     @Autowired
     @Qualifier("passwordValidator")
-    private PasswordValidator  validator;
-    
+    private PasswordValidator validator;
+
     @Autowired
     ServletConfig ctx;
-    
-    
+
     @InitBinder
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
     }
-    
-   
-   @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView showForm(HttpServletRequest request) {
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ModelAndView showIndex() {
+        System.out.println("Testing index");
+        return new ModelAndView("pages/index/index");
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView showForm(HttpServletRequest request
+    ) {
         HttpSession session = request.getSession(false);
-        if(session.getAttribute("users")==null){
+        if (session.getAttribute("users") == null) {
             return new ModelAndView("pages/auth/registration", "user", new User());
-        }
-        else
-        {
+        } else {
             return new ModelAndView("redirect:/home");
         }
     }
- 
-    
- 
-    
+
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView submit(@Valid @ModelAttribute("user")User user,BindingResult result, ModelMap model,HttpServletRequest request) {
-        
-        ModelAndView mod = new ModelAndView();
-         userInsert = new UserDaoImpl();
-         User usx = new User();
-        if (result.hasErrors()) {
-            return new ModelAndView( "/pages/auth/registration");
-        }
-      
-            if(userInsert.check(user)){
-                userInsert.insert(user);
-                usx = userInsert.getUsers(user.getEmail());
-                String saveDirectory;
-                saveDirectory = ctx.getServletContext().getRealPath("/")+"WEB-INF/";
-        
-                    File f = new File(saveDirectory+"/adImages/"+ (int)usx.getId());
-                    if(f.exists() == false){
-                         f.mkdirs();
-                    }
-                model.addAttribute("success", "Congratulation! You have registered successfully :)");
-                model.addAttribute("message",null);
-                mod.setViewName("redirect:/login");
-                
-               return mod;
-            }
-            else
-            {
-               model.addAttribute("message","Email already exist");
-               model.addAttribute("success", null);
-                
-                return new ModelAndView("pages/auth/registration");
-            }
-  
-              
-         
-        
-    }
-      
-    }
-    
-
-    
-/*@Target({TYPE, FIELD, ANNOTATION_TYPE}) 
-@Retention(RUNTIME)
-@Constraint(validatedBy = EmailValidator.class)
-@Documented
-public @interface ValidEmail {   
-    String message() default "Invalid email";
-    Class<?>[] groups() default {}; 
-    Class<? extends Payload>[] payload() default {};
-}   
-    
-    
-    public static boolean isValid(String email)3399999
+    public ModelAndView submit(@Valid
+            @ModelAttribute("user") User user, BindingResult result, ModelMap model, HttpServletRequest request
+    ) 
     {
-        String val="^[A-Za-z0-9._%+-]+@[A-Za-z0-9._-]+\\.[A-Za-z]{2,}$";
-        Pattern checkReg = Pattern.compile(val);
-        
-        Matcher emailMatcher= checkReg.matcher(email);
-        
-        
-        return emailMatcher.matches();
-      
-   
-        
-    } */
-    
-    
 
+        ModelAndView mod = new ModelAndView();
+        userInsert = new UserDaoImpl();
+        User usx = new User();
+        if (result.hasErrors()) {
+            return new ModelAndView("/pages/auth/registration");
+        }
 
+        if (userInsert.check(user)) {
+            userInsert.insert(user);
+            usx = userInsert.getUsers(user.getEmail());
+            String saveDirectory;
+            saveDirectory = ctx.getServletContext().getRealPath("/") + "WEB-INF/";
 
+            File f = new File(saveDirectory + "/adImages/" + (int) usx.getId());
+            if (f.exists() == false) {
+                f.mkdirs();
+            }
+            model.addAttribute("success", "Congratulation! You have registered successfully :)");
+            model.addAttribute("message", null);
+            mod.setViewName("redirect:/login");
 
+            return mod;
+        } else {
+            model.addAttribute("message", "Email already exist");
+            model.addAttribute("success", null);
+
+            return new ModelAndView("pages/auth/registration");
+        }
+
+    }
+
+}
 

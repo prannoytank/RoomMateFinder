@@ -34,7 +34,7 @@ body {
     <br>
     <br>
     <div align="center">
-        <h1>Crunchify - Spring MVC Upload Multiple Files Example</h1>
+        <h1>Upload Images For the Advertisement</h1>
  
         <form:form method="post" action="savefiles.html"
             modelAttribute="uploadForm" enctype="multipart/form-data">
@@ -53,6 +53,7 @@ body {
             <br />
             <input type="submit" value="Upload" />
             <input id="addFile" type="button" value="Add File" />
+            <input type="hidden" name="hidden-adId" value="${adId}" />
         </form:form>
  
         <br />

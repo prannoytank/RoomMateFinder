@@ -24,6 +24,8 @@ public interface AdvertismentDAO {
     public Advertisment findByAdvertismentId(int adId);
     public List<Advertisment> findByCity(String city);
     
+    public List<Advertisment> findByUserId(int userID);
+    
     public Connection getConnection();
     
     public ResultSet searchAdvertisement(Advertisment amodel);
