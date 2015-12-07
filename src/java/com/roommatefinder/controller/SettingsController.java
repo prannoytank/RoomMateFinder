@@ -2,12 +2,10 @@ package com.roommatefinder.controller;
 
 import com.roommatefinder.model.User;
 import com.roommatefinder.daoImpl.UserDaoImpl;
-import com.roommatefinder.model.Advertisment;
-import com.roommatefinder.validator.AdvertismentValidator;
+import com.roommatefinder.validator.SettingsValidator;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -34,12 +32,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/settings")
 public class SettingsController {
 
+    @Autowired
+    @Qualifier("settingsValidator")
+    private SettingsValidator validator;
+
+    @InitBinder
+    private void initBinder(WebDataBinder binder) {
+        binder.setValidator(validator);
+    }
+    //session variable to be added
     @RequestMapping(method = RequestMethod.GET)
     public String initForm(Model model, HttpServletRequest request) {
         UserDaoImpl userdao = new UserDaoImpl();
         User userModel = new User();
-
-        int userId = 1;
+        
+        double userId = 1;
+         userModel.setId(userId);
         try {
             ResultSet rs = userdao.getUserSettings(userId);
             while (rs.next()) {
@@ -53,12 +61,9 @@ public class SettingsController {
                 userModel.setName(rs.getString("FULLNAME"));
                 userModel.setGender(rs.getString("GENDER"));
                 userModel.setContact(rs.getString("CONTACT"));
-                userModel.setDateOfBirth(rs.getDate("DATEOFBIRTH"));
-
-            }
-
+               }
             model.addAttribute("userModel", userModel);
-            System.out.println(userModel.getCountry());
+            
         } catch (SQLException ex) {
             Logger.getLogger(SettingsController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -68,18 +73,19 @@ public class SettingsController {
     @RequestMapping(method = RequestMethod.POST)
     public String submitForm(Model model, @ModelAttribute("userModel") @Valid User userModel, BindingResult result) 
     {
-        model.addAttribute("userModel", userModel);
+       // model.addAttribute("userModel", userModel);
         //initModelList(model);
         String returnVal = "successForm";
         if (result.hasErrors()) {
-            returnVal = "pages/home/advancedSearch";
-            //return "pages/home/advancedSearch";
-        } else {
+            returnVal = "pages/home/settings";
+            System.out.println("in has errors");
+                   } else {
             UserDaoImpl userdao = new UserDaoImpl();
-            int a = userdao.updateSettings(1, userModel);
+            int a = userdao.updateSettings(userModel);
+            
         }
 
-        return "pages/home/advancedSearch";
+        return "pages/home/home";
     }
 
 }

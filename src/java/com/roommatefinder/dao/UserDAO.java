@@ -19,7 +19,7 @@ public interface UserDAO {
     public boolean check(User user);
     public boolean check(String email);
     public boolean isValidate(User user);
-    public ResultSet getUserSettings(int userid);
-    public int updateSettings(int userId,User userModel); 
+    public ResultSet getUserSettings(double userid);
+    public int updateSettings(User userModel); 
     public User getUsers(String email);
 }

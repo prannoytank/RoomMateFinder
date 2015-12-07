@@ -102,7 +102,7 @@ Connection connection;
     }
     
     @Override
-    public ResultSet getUserSettings(int userId){
+    public ResultSet getUserSettings(double userId){
         ResultSet rs=null;
        
      try{
@@ -110,7 +110,7 @@ Connection connection;
      String query="Select FULLNAME, GENDER, CONTACT, EMAIL, POSTALCODE, STREETADDRESS,COUNTRY,PROVINCE, CITY, ACTIVE from USERMASTER where USERID=?" ;
      PreparedStatement preparedStatement = con.prepareStatement(query);
      
-     preparedStatement.setInt(1,userId );
+     preparedStatement.setDouble(1,userId );
      
      rs= preparedStatement.executeQuery();
      }catch(Exception e){
@@ -121,27 +121,31 @@ Connection connection;
     
     }
     @Override
-    public int updateSettings(int userId, User userModel){
+    public int updateSettings(User userModel){
      int ps=0;
-     try{
-     Connection con= ConnectionFactory.getConnection();
-     String query="Update USERMASTER set COUNTRY=?, STREETADDRESS=?, PROVINCE=?, CITY=?, POSTALCODE=?, CONTACTNUMBER=? where USERID=?";
-     PreparedStatement preparedStatement = con.prepareStatement(query);
-     
-     preparedStatement.setString(1,userModel.getCountry() );
-     preparedStatement.setString(2,userModel.getStreetAddress() );
-     preparedStatement.setString(3,userModel.getProvince() );
-     preparedStatement.setString(4,userModel.getCity() );
-     preparedStatement.setString(5,userModel.getPostalCode() );
-     preparedStatement.setString(6,userModel.getContact() );
-     preparedStatement.setInt(7,userId );
-     
-     ps= preparedStatement.executeUpdate();
-     }catch(Exception e){
-         
-     }
-   
-    return ps;
+        try {
+        
+        Connection con= ConnectionFactory.getConnection();
+        String query="Update USERMASTER set COUNTRY=?, STREETADDRESS=?, PROVINCE=?, CITY=?, POSTALCODE=?, CONTACT=? where USERID=?";
+        PreparedStatement preparedStatement = con.prepareStatement(query);
+        
+        preparedStatement.setString(1,userModel.getCountry() );
+        preparedStatement.setString(2,userModel.getStreetAddress() );
+        preparedStatement.setString(3,userModel.getProvince() );
+        preparedStatement.setString(4,userModel.getCity() );
+        preparedStatement.setString(5,userModel.getPostalCode() );
+        preparedStatement.setString(6,userModel.getContact() );
+        preparedStatement.setDouble(7,userModel.getId() );
+        System.out.println("inside update statement" +userModel.getId());
+         System.out.println("inside update statement" +userModel.getCity());
+        ps= preparedStatement.executeUpdate();
+        
+        
+       
+    } catch (SQLException ex) {
+        Logger.getLogger(UserDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+    }
+     return ps;
     }
     
     
@@ -198,7 +202,7 @@ Connection connection;
             newuser.setId(rs.getDouble("USERID"));
             newuser.setActive(rs.getString("ACTIVE"));
             newuser.setCity(rs.getString("CITY"));
-            newuser.setContact(rs.getDouble("CONTACT"));
+            newuser.setContact(rs.getString("CONTACT"));
             newuser.setCountry(rs.getString("COUNTRY"));
             newuser.setDateOfBirth(rs.getDate("DATEOFBIRTH"));
             newuser.setEmail(rs.getString("EMAIL"));

@@ -18,7 +18,7 @@
             <legend>SETTINGS</legend>
                 <legend>Name : ${userModel.getName()}</legend>
                  <legend>Email : ${userModel.getEmail()}</legend>
-            
+            <input type ="hidden" id = "id" name ="id" value ="${userModel.getId()}"/>
             <div class="row">  
                 <div class="col-md-4" >	
                     <label for="country">Country:</label>
