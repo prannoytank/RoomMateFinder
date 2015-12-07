@@ -53,6 +53,7 @@ public class LoginController {
     public ModelAndView submit(@Valid @ModelAttribute("user")User user,BindingResult result, ModelMap model,HttpServletRequest request) {
         //System.out.println("inside");
         ModelAndView mod = new ModelAndView("");
+        User usv = new User();
         userSelect = new UserDaoImpl();
         if (result.hasErrors()) {
                  System.out.println("inside");
@@ -62,7 +63,8 @@ public class LoginController {
         
         if(userSelect.isValidate(user)){
             model.addAttribute("message",null);
-            request.getSession().setAttribute("user", user);
+            usv = userSelect.getUsers(user.getEmail());
+            request.getSession().setAttribute("users", usv);
             mod.setViewName("pages/home/home");
                 
             return mod;

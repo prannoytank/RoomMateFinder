@@ -21,4 +21,5 @@ public interface UserDAO {
     public boolean isValidate(User user);
     public ResultSet getUserSettings(int userid);
     public int updateSettings(int userId,User userModel); 
+    public User getUsers(String email);
 }
