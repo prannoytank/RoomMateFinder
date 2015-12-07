@@ -12,7 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -83,6 +85,51 @@ public class AdvertismentDaoImpl implements AdvertismentDAO{
         
         return ConnectionFactory.getConnection();
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Advertisment> findByCity(String city) {
+        Advertisment ads= new Advertisment();
+       connection=getConnection();
+       List<Advertisment> ls = new ArrayList<>();
+       String query = "SELECT * FROM advertisement WHERE CITY=?";
+       PreparedStatement ps;
+        try {
+            ps = connection.prepareStatement(query);
+             ps.setString(1, city);
+             ResultSet rs = ps.executeQuery();
+             if(rs.next()){
+                 
+                 ads.setAdId(rs.getInt("ADID"));
+                 ads.setAdPostDate(String.valueOf(rs.getDate("ADPOSTDATE")));
+                 ads.setAdTitle(rs.getString("ADTITLE"));
+                 ads.setAlcohol(rs.getString("ALCOHOL"));
+                 ads.setBuildingType(rs.getString("BUILDINGTYPE"));
+                 ads.setCity(rs.getString("CITY"));
+                 ads.setCountry(rs.getString("COUNTRY"));
+                 ads.setDescription(rs.getString("DESCRIPTION"));
+                 ads.setDiet(rs.getString("DIET"));
+                 ads.setGender(rs.getString("GENDER"));
+                 ads.setNoOfRooms(rs.getInt("NOOFROOMS"));
+                 ads.setPet(rs.getString("PETLOVER"));
+                 ads.setPostalCode(rs.getString("POSTALCODE"));
+                 ads.setProvince(rs.getString("PROVINCE"));
+                 ads.setRent(rs.getInt("RENT"));
+                 ads.setRoomType(rs.getString("ROOMTYPE"));
+                 ads.setSmoke(rs.getString("SMOKER"));
+                 ads.setStreetAddress(rs.getString("STREETADDRESS"));
+                 ads.setUserId(rs.getInt("USERID"));
+                 
+                 ls.add(ads);
+                 System.out.println(ls.size());
+             }
+             return ls;
+        } catch (SQLException ex) {
+            Logger.getLogger(AdvertismentDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+        return ls;
+       
     }
     
 }

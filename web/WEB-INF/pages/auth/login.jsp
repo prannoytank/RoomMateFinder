@@ -24,6 +24,9 @@
     </H1>
     <form:form commandName="user" action="login" method="POST" enctype="utf8" cssClass="form-horizontal">
             
+        <c:if test="${success != null}">
+            <div class="alert alert-successr">${success}</div>
+        </c:if>
         <c:if test="${message != null}">
             <div class="alert alert-danger">${message}</div>
         </c:if>
