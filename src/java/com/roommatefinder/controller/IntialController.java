@@ -23,24 +23,23 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class IntialController {
 
-    
-    @RequestMapping(value={"/","/index"}, method = RequestMethod.GET) 
+    @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
     public ModelAndView landingPage() throws IOException {
-    
+
         return new ModelAndView("pages/index/index");
     }
-    
-    @RequestMapping(value="/searchindex", method = RequestMethod.POST) 
+
+    @RequestMapping(value = "/searchindex", method = RequestMethod.POST)
     public ModelAndView search(HttpServletRequest request, Model model) throws IOException {
-         String city = request.getParameter("cities");
-         AdvertismentDaoImpl advs = new AdvertismentDaoImpl();
-         System.out.println(city);
+        String city = request.getParameter("cities");
+        AdvertismentDaoImpl advs = new AdvertismentDaoImpl();
+        System.out.println(city);
         List<Advertisment> list = advs.findByCity(city);
-        
+
         model.addAttribute("searchdata", list);
         return new ModelAndView("pages/index/searchresult");
     }
-    
+
     @RequestMapping("/home") // For User Home Page
     public ModelAndView homePage() throws IOException {
 
