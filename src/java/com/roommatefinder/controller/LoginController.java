@@ -10,6 +10,7 @@ import com.roommatefinder.model.User;
 import com.roommatefinder.validator.LoginValidator;
 import java.sql.Connection;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -45,8 +46,14 @@ public class LoginController {
     
     
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView showForm() {
-        return new ModelAndView("/pages/auth/login", "user", new User());
+    public ModelAndView showForm(HttpServletRequest request) {
+         HttpSession session = request.getSession(false);
+         if(session.getAttribute("users")==null){
+            return new ModelAndView("pages/auth/login", "user", new User());
+         }
+         else{
+             return new ModelAndView("redirect:/home");
+         }
     }
     
     @RequestMapping(method = RequestMethod.POST)
@@ -58,25 +65,33 @@ public class LoginController {
         if (result.hasErrors()) {
                  System.out.println("inside");
 
-            return new ModelAndView( "/pages/auth/login");
+            return new ModelAndView("/pages/auth/login");
         }
         
-        if(userSelect.isValidate(user)){
-            model.addAttribute("message",null);
-            usv = userSelect.getUsers(user.getEmail());
-            request.getSession().setAttribute("users", usv);
-            mod.setViewName("pages/home/home");
-                
-            return mod;
+        if(userSelect.check(user.getEmail())){
+            
+                if(userSelect.isValidate(user)){
+                    model.addAttribute("message",null);
+                    usv = userSelect.getUsers(user.getEmail());
+                    request.getSession().setAttribute("users", usv);
+                    mod.setViewName("redirect:/home");
+
+                    return mod;
+                }
+                else
+                {
+                    model.addAttribute("message","Email id or Password is wrong");
+
+                        
+                        return new ModelAndView("pages/auth/login");
+                }
         }
-        else
-        {
-            model.addAttribute("message","Email id or Password is wrong");
-               
-                System.out.println("FAILL!!!!!");
-                return new ModelAndView("/pages/auth/login");
+        else{
+             model.addAttribute("message","Email id does not exist please register! ");
+
+                      
+                        return new ModelAndView("pages/auth/login");
         }
-        
    
     }
     

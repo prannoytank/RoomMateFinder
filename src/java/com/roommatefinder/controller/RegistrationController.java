@@ -8,8 +8,12 @@ package com.roommatefinder.controller;
 import com.roommatefinder.daoImpl.UserDaoImpl;
 import com.roommatefinder.model.User;
 import com.roommatefinder.validator.PasswordValidator;
+import java.io.File;
 import java.sql.Connection;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +43,9 @@ public class RegistrationController {
     @Qualifier("passwordValidator")
     private PasswordValidator  validator;
     
+    @Autowired
+    ServletConfig ctx;
+    
     
     @InitBinder
     private void initBinder(WebDataBinder binder) {
@@ -47,8 +54,15 @@ public class RegistrationController {
     
    
    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView showForm() {
-        return new ModelAndView("/pages/auth/registration", "user", new User());
+    public ModelAndView showForm(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if(session.getAttribute("users")==null){
+            return new ModelAndView("pages/auth/registration", "user", new User());
+        }
+        else
+        {
+            return new ModelAndView("redirect:/home");
+        }
     }
  
     
@@ -59,24 +73,33 @@ public class RegistrationController {
         
         ModelAndView mod = new ModelAndView();
          userInsert = new UserDaoImpl();
+         User usx = new User();
         if (result.hasErrors()) {
             return new ModelAndView( "/pages/auth/registration");
         }
       
             if(userInsert.check(user)){
                 userInsert.insert(user);
-                
+                usx = userInsert.getUsers(user.getEmail());
+                String saveDirectory;
+                saveDirectory = ctx.getServletContext().getRealPath("/")+"WEB-INF/";
+        
+                    File f = new File(saveDirectory+"/adImages/"+ (int)usx.getId());
+                    if(f.exists() == false){
+                         f.mkdirs();
+                    }
+                model.addAttribute("success", "Congratulation! You have registered successfully :)");
                 model.addAttribute("message",null);
-                mod.setViewName("pages/home/home");
+                mod.setViewName("redirect:/login");
                 
                return mod;
             }
             else
             {
                model.addAttribute("message","Email already exist");
-               
-                System.out.println("FAILL!!!!!");
-                return new ModelAndView("/pages/auth/registration");
+               model.addAttribute("success", null);
+                
+                return new ModelAndView("pages/auth/registration");
             }
   
               
@@ -99,7 +122,7 @@ public @interface ValidEmail {
 }   
     
     
-    public static boolean isValid(String email)
+    public static boolean isValid(String email)3399999
     {
         String val="^[A-Za-z0-9._%+-]+@[A-Za-z0-9._-]+\\.[A-Za-z]{2,}$";
         Pattern checkReg = Pattern.compile(val);
