@@ -34,7 +34,8 @@
     
     <bean id="passwordValidator" class="com.roommatefinder.validator.PasswordValidator" /> 
     <bean id="advertismentValidator" class="com.roommatefinder.validator.AdvertismentValidator" />
-     
+    <bean id="loginValidator" class="com.roommatefinder.validator.LoginValidator" />
+    <bean id="settingsValidator" class="com.roommatefinder.validator.SettingsValidator" />
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
     
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -44,13 +45,13 @@
    
     </bean>
     
-  <!--  <bean id='bCryptPasswordEncoder' class='org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder'>
+  <!--<bean id='bCryptPasswordEncoder' class='org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder'>
 
         <authentication-manager>
           <authentication-provider user-service-ref="userDetailsService">
                   <password-encoder ref="bCryptPasswordEncoder"/>
           </authentication-provider>
-        </authentication-manager>
+        </authentication-manager> 
     </bean> -->
     
 </beans>

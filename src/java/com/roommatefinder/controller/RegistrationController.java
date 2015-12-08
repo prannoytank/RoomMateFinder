@@ -5,19 +5,24 @@
  */
 package com.roommatefinder.controller;
 
+import com.roommatefinder.daoImpl.UserDaoImpl;
 import com.roommatefinder.model.User;
-import com.roommatefinder.utils.ConnectionFactory;
+import com.roommatefinder.validator.PasswordValidator;
+import java.io.File;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,55 +33,83 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Crusty
  */
 @Controller
+@RequestMapping("/register")
 public class RegistrationController {
      
     Connection connection;
+     UserDaoImpl userInsert;
+     
+    @Autowired
+    @Qualifier("passwordValidator")
+    private PasswordValidator  validator;
     
-  
+    @Autowired
+    ServletConfig ctx;
     
+    
+    @InitBinder
+    private void initBinder(WebDataBinder binder) {
+        binder.setValidator(validator);
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView showIndex() {
         System.out.println("Testing index");
         return new ModelAndView("pages/index/index");
     }
     
-   @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public ModelAndView showForm() {
-        return new ModelAndView("/auth/registration", "user", new User());
+   
+   @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView showForm(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if(session.getAttribute("users")==null){
+            return new ModelAndView("pages/auth/registration", "user", new User());
+        }
+        else
+        {
+            return new ModelAndView("redirect:/home");
+        }
     }
  
     
  
     
-    @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String submit(@Valid @ModelAttribute("user")User user,BindingResult result, ModelMap model) {
+    @RequestMapping(method = RequestMethod.POST)
+    public ModelAndView submit(@Valid @ModelAttribute("user")User user,BindingResult result, ModelMap model,HttpServletRequest request) {
+        
+        ModelAndView mod = new ModelAndView();
+         userInsert = new UserDaoImpl();
+         User usx = new User();
         if (result.hasErrors()) {
-            return "/auth/registration";
+            return new ModelAndView( "/pages/auth/registration");
         }
-       String pass = user.getPassword();
-        if(pass.equals(user.getPassconf())){
-                    connection = ConnectionFactory.getConnection();
-                    String query = "INSERT INTO(FULLNAME,EMAIL,PASSWORD) VALUES(?,?,?)";
-            try {
-                PreparedStatement ps = connection.prepareStatement(query);
-                ps.setString(1, user.getName());
-                ps.setString(2, user.getEmail());
-                ps.setString(3, encryptPass(user.getPassword()));
-                ps.execute();
-            } catch (SQLException ex) {
-                Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
+      
+            if(userInsert.check(user)){
+                userInsert.insert(user);
+                usx = userInsert.getUsers(user.getEmail());
+                String saveDirectory;
+                saveDirectory = ctx.getServletContext().getRealPath("/")+"WEB-INF/";
+        
+                    File f = new File(saveDirectory+"/adImages/"+ (int)usx.getId());
+                    if(f.exists() == false){
+                         f.mkdirs();
+                    }
+                model.addAttribute("success", "Congratulation! You have registered successfully :)");
+                model.addAttribute("message",null);
+                mod.setViewName("redirect:/login");
+                
+               return mod;
             }
-                    
-              model.addAttribute("name", user.getName());
-              model.addAttribute("email", user.getEmail());
-              model.addAttribute("password", user.getPassword());
-              return "auth/userviewtemp";
-        }
-        else
-        {
-            model.addAttribute("error","Password don't match!");
-            return "/auth/registration";
-        }
+            else
+            {
+               model.addAttribute("message","Email already exist");
+               model.addAttribute("success", null);
+                
+                return new ModelAndView("pages/auth/registration");
+            }
+  
+              
+         
+        
+    }
       
     }
     
@@ -93,7 +126,7 @@ public @interface ValidEmail {
 }   
     
     
-    public static boolean isValid(String email)
+    public static boolean isValid(String email)3399999
     {
         String val="^[A-Za-z0-9._%+-]+@[A-Za-z0-9._-]+\\.[A-Za-z]{2,}$";
         Pattern checkReg = Pattern.compile(val);
@@ -107,15 +140,9 @@ public @interface ValidEmail {
         
     } */
     
-    protected String encryptPass(String pass){
-            
-        BCryptPasswordEncoder passencode= new BCryptPasswordEncoder();
-        String hashedPassword = passencode.encode(pass);
-        return hashedPassword;
+    
 
-     }
 
-}
 
 
 

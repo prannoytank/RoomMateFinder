@@ -136,31 +136,74 @@ public class AdvertismentDaoImpl implements AdvertismentDAO{
     }
 
     @Override
-    public List<Advertisment> findByUserId(int userID) {
-        List<Advertisment> advertismentList = new ArrayList<>();
-        ResultSet advertisementResult;
+    public List<Advertisment> findByCity(String city) {
+        Advertisment ads= new Advertisment();
+       connection=getConnection();
+       List<Advertisment> ls = new ArrayList<>();
+       String query = "SELECT * FROM advertisement WHERE CITY=?";
+       PreparedStatement ps;
         try {
-            Advertisment adBean;
-            
-            
-            connection = getConnection();
-            psmt = connection.prepareStatement("Select ADID,ADTITLE,STREETADDRESS,ADPOSTDATE from ADVERTISEMENT where USERID = ?");
-            psmt.setInt(1,userID);
-            advertisementResult = psmt.executeQuery();
-            while(advertisementResult.next()){
-                adBean = new Advertisment();
-                
-                adBean.setAdId(advertisementResult.getInt("ADID"));
-                adBean.setAdTitle(advertisementResult.getString("ADTITLE"));
-                adBean.setStreetAddress(advertisementResult.getString("STREETADDRESS"));
-                adBean.setAdPostDate(String.valueOf(advertisementResult.getDate("ADPOSTDATE")));
-                
-                advertismentList.add(adBean);
-            }
+            ps = connection.prepareStatement(query);
+             ps.setString(1, city);
+             ResultSet rs = ps.executeQuery();
+             if(rs.next()){
+                 
+                 ads.setAdId(rs.getInt("ADID"));
+                 ads.setAdPostDate(String.valueOf(rs.getDate("ADPOSTDATE")));
+                 ads.setAdTitle(rs.getString("ADTITLE"));
+                 ads.setAlcohol(rs.getString("ALCOHOL"));
+                 ads.setBuildingType(rs.getString("BUILDINGTYPE"));
+                 ads.setCity(rs.getString("CITY"));
+                 ads.setCountry(rs.getString("COUNTRY"));
+                 ads.setDescription(rs.getString("DESCRIPTION"));
+                 ads.setDiet(rs.getString("DIET"));
+                 ads.setGender(rs.getString("GENDER"));
+                 ads.setNoOfRooms(rs.getInt("NOOFROOMS"));
+                 ads.setPet(rs.getString("PETLOVER"));
+                 ads.setPostalCode(rs.getString("POSTALCODE"));
+                 ads.setProvince(rs.getString("PROVINCE"));
+                 ads.setRent(rs.getInt("RENT"));
+                 ads.setRoomType(rs.getString("ROOMTYPE"));
+                 ads.setSmoke(rs.getString("SMOKER"));
+                 ads.setStreetAddress(rs.getString("STREETADDRESS"));
+                 ads.setUserId(rs.getInt("USERID"));
+                 
+                 ls.add(ads);
+                 System.out.println(ls.size());
+             }
+             return ls;
         } catch (SQLException ex) {
             Logger.getLogger(AdvertismentDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return advertismentList;
+      
+        return ls;
+       
+    }
+    
+    @Override
+    public ResultSet searchAdvertisement(Advertisment adModel1){
+    ResultSet rs=null;
+       
+     try{
+     Connection con= ConnectionFactory.getConnection();
+     String query="Select * from Advertisement where CITY=? and BUILDINGTYPE=? and NOOFROOMS = ? and GENDER=? and PETLOVER=? and DIET=? and SMOKER = ? and ALCOHOL=?" ;
+     PreparedStatement preparedStatement = con.prepareStatement(query);
+     
+     preparedStatement.setString(1,adModel1.getCity() );
+     preparedStatement.setString(2,adModel1.getBuildingType() );
+     preparedStatement.setInt(3,adModel1.getNoOfRooms() );
+     preparedStatement.setString(4,adModel1.getGender() );
+     preparedStatement.setString(5,adModel1.getPet() );
+     preparedStatement.setString(6,adModel1.getDiet() );
+     preparedStatement.setString(7,adModel1.getSmoke());
+     preparedStatement.setString(8,adModel1.getAlcohol());
+     
+     rs= preparedStatement.executeQuery();
+     }catch(Exception e){
+         
+     }
+     
+     return rs;  
     }
     
 }
