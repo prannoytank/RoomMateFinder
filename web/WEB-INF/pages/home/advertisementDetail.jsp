@@ -11,17 +11,17 @@
 
         <h2>${adModel.adTitle}</h2>    
         <h3>${adModel.adPostDate}</h3>
-        
-        
-        
+
+
+
         <c:if test="${not empty imagePath}">
-              
+
             <c:forEach items="${imagePath}" var="imgPath">
                 ${imagePath} <br />
                 <img src="${imgPath}" alt="AdImage" />
             </c:forEach>  
         </c:if> 
-        
+
         <div>
 
             <!-- Nav tabs -->
@@ -55,13 +55,13 @@
                     Alcohol: ${adModel.alcohol}  <br />
 
                 </div>
-                    <div role="tabpanel" class="tab-pane" id="contact">
+                <div role="tabpanel" class="tab-pane" id="contact">
                     Name: ${userBean.name}  <br />
                     Email Address: ${userBean.email}  <br />
                     Contact: ${userBean.contact}  <br />
-                    
+
                 </div>
-               
+
             </div>
 
         </div>

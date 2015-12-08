@@ -11,6 +11,8 @@ import com.roommatefinder.model.Advertisment;
 import com.roommatefinder.model.User;
 import com.roommatefinder.validator.AdvertismentValidator;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -88,7 +90,7 @@ public class AdvertismentController {
     }
 
     @RequestMapping(value = "/view/{adId}", method = RequestMethod.GET)
-    public ModelAndView advertismentDetail(Model model, @PathVariable("adId") int adId, @Valid Advertisment adModel, BindingResult result,HttpServletRequest request) throws IOException {
+    public ModelAndView advertismentDetail(Model model, @PathVariable("adId") int adId, @Valid Advertisment adModel, BindingResult result,HttpServletRequest request) throws IOException, SQLException {
 
        
         
@@ -110,7 +112,7 @@ public class AdvertismentController {
         }
         model.addAttribute("adModel", adBean);
         model.addAttribute("userBean", userBean);
-        //model.addAttribute("imagePath",imageList);
+       
         
         
         return new ModelAndView("pages/home/advertisementDetail");

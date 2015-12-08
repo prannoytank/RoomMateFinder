@@ -228,9 +228,9 @@ public class AdvertismentDaoImpl implements AdvertismentDAO {
     @Override
     public boolean deleteAdvertisement(int adId) {
         
-         
+         Connection con = ConnectionFactory.getConnection();
         try {
-            PreparedStatement ps = ConnectionFactory.getConnection().prepareStatement("Delete from ADVERTISEMENT where ADID=?");
+            PreparedStatement ps = con.prepareStatement("Delete from ADVERTISEMENT where ADID=?");
             ps.setInt(1,adId);
             
             int deletedRow = ps.executeUpdate();

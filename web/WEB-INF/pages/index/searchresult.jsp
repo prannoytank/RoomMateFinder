@@ -22,13 +22,14 @@
                 <td><c:out value="${list.adTitle}" /></td>
                  <td><c:out value="${list.streetAddress}" /></td>
                 <td><c:out value="${list.adPostDate}" /></td>
-        <td><a class="btn btn-info" href="/RoomMateFinder/advertisment/view/${adList.adId}" title="View Details">View Details</a></td>    
+        <td><a class="btn btn-info" href="/RoomMateFinder/advertisment/view/${list.adId}" title="View Details">View Details</a></td>    
                 </tr>
         </c:forEach>
         </tbody>
     </table>
             
     </c:if>
+    
     
 </div>
 <jsp:include page="includes/footer.jsp" />
