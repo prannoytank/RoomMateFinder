@@ -13,7 +13,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <div id="content-wrapper">
 
-    <h1>Welcome to index Page </h1>   
+    <h1>Welcome to Roommate Finder! </h1>   
 <div id="content-wrapper">
     <div class ="row">
         <form:form cssClass="form-inline" action="/RoomMateFinder/searchindex" method="POST">

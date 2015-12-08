@@ -87,7 +87,7 @@ public class LoginController {
                 }
         }
         else{
-             model.addAttribute("message","Email id does not exist please register! ");
+             model.addAttribute("message","Email id does not exist please <a href='/RoomMateFinder/register'> register! </a>");
 
                       
                         return new ModelAndView("pages/auth/login");
