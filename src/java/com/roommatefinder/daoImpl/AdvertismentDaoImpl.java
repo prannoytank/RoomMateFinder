@@ -9,13 +9,11 @@ import com.roommatefinder.dao.AdvertismentDAO;
 import com.roommatefinder.model.Advertisment;
 import com.roommatefinder.utils.ConnectionFactory;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -132,7 +130,7 @@ public class AdvertismentDaoImpl implements AdvertismentDAO{
     public Connection getConnection() {
         
         return ConnectionFactory.getConnection();
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
 
     @Override
@@ -204,6 +202,37 @@ public class AdvertismentDaoImpl implements AdvertismentDAO{
      }
      
      return rs;  
+    }
+
+    @Override
+    public List<Advertisment> findByUserId(int userID) {
+        List<Advertisment> userAdList= new ArrayList<>();
+        try {
+            
+            Connection con =  ConnectionFactory.getConnection();
+            Advertisment adBean ;
+            
+            PreparedStatement ps =con.prepareStatement("Select ADID,ADTITLE,ADPOSTDATE,STREETADDRESS from ADVERTISEMENT where USERID=?");
+            ps.setInt(1,userID);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+               // System.out.println(rs.getInt("ADID"));
+                adBean = new Advertisment();
+                
+                adBean.setAdId(rs.getInt("ADID"));
+                adBean.setAdPostDate(String.valueOf(rs.getDate("ADPOSTDATE")));
+                adBean.setAdTitle(rs.getString("ADTITLE"));
+                adBean.setStreetAddress(rs.getString("STREETADDRESS"));
+                
+                userAdList.add(adBean);
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AdvertismentDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.print(userAdList.size());
+        return userAdList;
     }
     
 }

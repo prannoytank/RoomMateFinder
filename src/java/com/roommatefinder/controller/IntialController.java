@@ -47,7 +47,7 @@ public class IntialController {
         AdvertismentDaoImpl adi = new AdvertismentDaoImpl();
         
         List<Advertisment> adList = adi.findByUserId(1);
-        
+         System.out.println(adList.size());
         modelList.addAttribute("advertisementList",adList);
         
         return new ModelAndView("pages/home/home");
