@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
  
 import org.springframework.stereotype.Controller;
@@ -39,20 +40,17 @@ public class FileUploadController {
     }
  
     @RequestMapping(value = "/savefiles", method = RequestMethod.POST)
-    public String crunchifySave(
-            @ModelAttribute("uploadForm") FileUpload uploadForm,
-            Model map) throws IllegalStateException, IOException {
+    public String crunchifySave( @ModelAttribute("uploadForm") FileUpload uploadForm,
+            Model map,HttpServletRequest request) throws IllegalStateException, IOException {
         String saveDirectory = servletConfig.getServletContext().getRealPath("/")+"WEB-INF/";
         
-        File f = new File(saveDirectory+"/adImages/1");
+        int adId = Integer.parseInt(request.getParameter("hidden-adId"));
+        
+        File f = new File(saveDirectory+"/adImages/1/"+adId);
         if(f.exists() == false){
         f.mkdirs();
         }
-        
-        
-        
-	 // System.out.println(f.getPath());
-        
+              
         List<MultipartFile> crunchifyFiles = uploadForm.getFiles();
  
         List<String> fileNames = new ArrayList<String>();
@@ -73,7 +71,7 @@ public class FileUploadController {
         }
  
         map.addAttribute("files", fileNames);
-        return "pages/home/uploadSuccess";
+        return "pages/home/home";
     }
     
     

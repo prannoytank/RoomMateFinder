@@ -32,6 +32,7 @@ public class Advertisment {
     private String roomType;
     private int noOfRooms;
     private String description;
+    private String furnished="Y";
 
     public String getAdTitle() {
         return adTitle;
@@ -203,4 +204,14 @@ public class Advertisment {
     public void setDescription(String description) {
         this.description = description;
     }   
+
+    public String getFurnished() {
+        return furnished;
+    }
+
+    public void setFurnished(String furnished) {
+        this.furnished = furnished;
+    }
+    
+    
 }

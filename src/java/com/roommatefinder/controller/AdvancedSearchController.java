@@ -72,9 +72,10 @@ public class AdvancedSearchController {
  @RequestMapping(method = RequestMethod.POST)
 	public String submitForm(Model model,@ModelAttribute("adModel1") @Valid Advertisment adModel1, BindingResult result) {
               
-		model.addAttribute("adModel1",adModel1);
-		String returnVal = "successForm";
+		//model.addAttribute("adModel1",adModel1);
+		String returnVal = "";
 		if(result.hasErrors()) {
+                    System.out.println("inside advanced search");
 			returnVal = "pages/home/advancedSearch";
 		} else {
                 model.addAttribute("adModel1", adModel1);

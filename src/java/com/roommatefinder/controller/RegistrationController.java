@@ -37,7 +37,7 @@ public class RegistrationController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView showIndex() {
         System.out.println("Testing index");
-        return new ModelAndView("/index/index");
+        return new ModelAndView("pages/index/index");
     }
     
    @RequestMapping(value = "/register", method = RequestMethod.GET)
