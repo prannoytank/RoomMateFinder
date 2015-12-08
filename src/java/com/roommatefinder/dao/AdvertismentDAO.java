@@ -29,4 +29,6 @@ public interface AdvertismentDAO {
     public Connection getConnection();
     
     public List<Advertisment> searchAdvertisement(Advertisment amodel);
+    
+    public boolean deleteAdvertisement(int adId);
 }

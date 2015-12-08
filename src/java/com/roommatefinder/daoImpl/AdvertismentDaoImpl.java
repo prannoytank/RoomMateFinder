@@ -228,4 +228,22 @@ public class AdvertismentDaoImpl implements AdvertismentDAO {
         return userAdList;
     }
 
+    @Override
+    public boolean deleteAdvertisement(int adId) {
+        
+         
+        try {
+            PreparedStatement ps = ConnectionFactory.getConnection().prepareStatement("Delete from ADVERTISEMENT where ADID=?");
+            ps.setInt(1,adId);
+            
+            int deletedRow = ps.executeUpdate();
+            
+            if(deletedRow == 1) return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(AdvertismentDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
+    }
+
 }

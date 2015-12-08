@@ -9,11 +9,7 @@ import com.roommatefinder.daoImpl.AdvertismentDaoImpl;
 import com.roommatefinder.model.Advertisment;
 import com.roommatefinder.model.User;
 import com.roommatefinder.validator.AdvertismentValidator;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletConfig;
@@ -22,7 +18,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -82,8 +77,8 @@ public class AdvertismentController {
              adModel.setUserId((int)user.getId());
              
             int adId = adi.insert(adModel);
-           System.out.println("Inside Success");
-            //model.addAttribute("adId", adId);
+           
+           
         }
         return new ModelAndView("redirect:/home");
     }
@@ -91,32 +86,32 @@ public class AdvertismentController {
     @RequestMapping(value = "/view/{adId}", method = RequestMethod.GET)
     public ModelAndView advertismentDetail(Model model, @PathVariable("adId") int adId, @Valid Advertisment adModel, BindingResult result,HttpServletRequest request) throws IOException {
 
-        //System.out.println(request.getRealPath("/"));
+       
         
         AdvertismentDaoImpl adi = new AdvertismentDaoImpl();
-//        String saveDirectory = request.getServletContext().getContextPath()+"/web/adImages/1/"+adId+"/";
-//       
-//      System.out.println(saveDirectory);
-//        ArrayList imageList = new ArrayList();
-//        
-//        File folder = new File(saveDirectory);
-//        File[] listOfFiles = folder.listFiles();
-//        for(int i = 0; i < listOfFiles.length; i++) {
-//            if (listOfFiles[i].isFile()) {
-//                
-//                imageList.add(listOfFiles[i].getAbsolutePath());
-//              
-//            }
-//        }
 
         Advertisment adBean = adi.findByAdvertismentId(adId);
        
         model.addAttribute("adModel", adBean);
-        //model.addAttribute("imagePath",imageList);
+      
         
         
         return new ModelAndView("pages/home/advertisementDetail");
     }
+    
+    @RequestMapping(value = "/delete/{adId}", method = RequestMethod.GET)
+    public ModelAndView advertismentDelete(Model model, @PathVariable("adId") int adId, @Valid Advertisment adModel, BindingResult result,HttpServletRequest request) throws IOException {
+
+       
+        
+        AdvertismentDaoImpl adi = new AdvertismentDaoImpl();
+
+        boolean isDeleted = adi.deleteAdvertisement(adId);
+       
+        
+        return new ModelAndView("redirect:/home");
+    }
+    
 
     private void initModelList(Model model) {
 

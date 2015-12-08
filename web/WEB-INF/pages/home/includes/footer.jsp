@@ -7,11 +7,11 @@
     </div>
     
     <div class="col-lg-4 col-md-offset-4">
-    <ul class="nav nav-pills nav-stacked">
+    <ul class="nav nav-pills">
         <li role="presentation"><a href="/RoomMateFinder/home">Home</a></li>
-        <li role="presentation"><a href="#">Profile</a></li>
-        <li role="presentation"><a href="#">Settings</a></li>
-        <li role="presentation"><a href="#">FAQ</a></li>
+        
+        <li role="presentation"><a href="/RoomMateFinder/settings">Settings</a></li>
+        
 
     </ul>
     </div>

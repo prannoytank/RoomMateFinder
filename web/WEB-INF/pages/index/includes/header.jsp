@@ -9,10 +9,10 @@
             
             <div class="col-lg-8">
             <ul class="nav nav-pills nav-justified" id="primary-nav-bar">
-                <li role="presentation"><a href="home">Home</a></li>
-                <li role="presentation"><a href="#">Register</a></li>
-                <li role="presentation"><a href="#">About Us</a></li>
-                <li role="presentation"><a href="#">Contact Us</a></li>
+              
+                <li role="presentation"><a href="/RoomMateFinder/register">Register</a></li>
+                <li role="presentation"><a href="/RoomMateFinder/login">Login</a></li>
+               
 
             </ul>
             </div>
