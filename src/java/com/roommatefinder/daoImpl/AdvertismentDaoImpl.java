@@ -41,7 +41,7 @@ public class AdvertismentDaoImpl implements AdvertismentDAO {
             psmt = connection.prepareStatement(advInsertQuery);
 
             psmt.setString(1, advertisment.getAdTitle());
-            psmt.setInt(2, 1);
+            psmt.setInt(2,advertisment.getUserId());
 
             psmt.setDate(3, getCurrentDate());
             psmt.setString(4, advertisment.getStreetAddress());

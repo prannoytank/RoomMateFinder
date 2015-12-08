@@ -7,6 +7,7 @@ package com.roommatefinder.controller;
 
 import com.roommatefinder.daoImpl.AdvertismentDaoImpl;
 import com.roommatefinder.model.Advertisment;
+import com.roommatefinder.model.User;
 import com.roommatefinder.validator.AdvertismentValidator;
 import java.io.File;
 import java.io.IOException;
@@ -65,21 +66,26 @@ public class AdvertismentController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView submitForm(Model model, @ModelAttribute("adModel") @Valid Advertisment adModel, BindingResult result) {
+    public ModelAndView submitForm(Model model, @ModelAttribute("adModel") @Valid Advertisment adModel, BindingResult result,HttpServletRequest request) {
 
         model.addAttribute("adModel", adModel);
-        ModelAndView welcomeModel = new ModelAndView("pages/home/uploadFile");
+        ModelAndView homeModel = new ModelAndView("pages/home/home");
         if (result.hasErrors()) {
-            welcomeModel = new ModelAndView("pages/home/advertisment");
+           ModelAndView welcomeModel = new ModelAndView("pages/home/advertisment");
+           System.out.println("Inside errors");
             return welcomeModel;
         } else {
 
             AdvertismentDaoImpl adi = new AdvertismentDaoImpl();
+             User user = (User)request.getSession().getAttribute("users");
+            
+             adModel.setUserId((int)user.getId());
+             
             int adId = adi.insert(adModel);
-
-            model.addAttribute("adId", adId);
+           System.out.println("Inside Success");
+            //model.addAttribute("adId", adId);
         }
-        return welcomeModel;
+        return new ModelAndView("redirect:/home");
     }
 
     @RequestMapping(value = "/view/{adId}", method = RequestMethod.GET)

@@ -45,8 +45,8 @@ public class SettingsController {
     public String initForm(Model model, HttpServletRequest request) {
         UserDaoImpl userdao = new UserDaoImpl();
         User userModel = new User();
-        
-        double userId = 1;
+         User user = (User) request.getSession().getAttribute("users");
+        double userId = user.getId();
          userModel.setId(userId);
         try {
             ResultSet rs = userdao.getUserSettings(userId);

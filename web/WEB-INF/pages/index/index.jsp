@@ -33,7 +33,7 @@
     
     </div>
        <div class = "row">
-        <br><a class ="btn btn-warning btn-lg" href ="search" role ="button">ADVANCED SEARCH</button><br>
+        <br><a class ="btn btn-warning btn-lg" href ="search" role ="button">ADVANCED SEARCH</a><br>
     </div>
 </div>
 
