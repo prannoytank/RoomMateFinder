@@ -14,13 +14,14 @@
 
         <h3>Listing By You !!!</h3>  
         <table class="table">
-            <tr><th>Title</th><th>Street Address</th><th>Date</th><th></th></tr>
+            <tr><th>Title</th><th>Street Address</th><th>Date</th><th></th><th></th></tr>
                     <c:forEach items="${advertisementList}" var="adList">
                 <tr>
                     <td><c:out value="${adList.adTitle}" /></td>
                     <td><c:out value="${adList.streetAddress}" /></td>
                     <td><c:out value="${adList.adPostDate}" /></td>
-                    <td><a class="btn btn-info" href="/RoomMateFinder/advertisment/view/${adList.adId}" title="View Details">View Details</a></td>    
+                    <td><a class="btn btn-info" href="/RoomMateFinder/advertisment/view/${adList.adId}" title="View Details">View Details</a></td>
+                    <td><a class="btn btn-danger" href="/RoomMateFinder/advertisment/delete/${adList.adId}" title="View Details">Delete</a></td>
                 </tr>
             </c:forEach>
 

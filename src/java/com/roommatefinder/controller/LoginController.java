@@ -63,7 +63,7 @@ public class LoginController {
         User usv = new User();
         userSelect = new UserDaoImpl();
         if (result.hasErrors()) {
-                 System.out.println("inside");
+                 
 
             return new ModelAndView("/pages/auth/login");
         }
