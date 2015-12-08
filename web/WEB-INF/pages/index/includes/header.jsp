@@ -3,7 +3,7 @@
     <div class="container-fluid" id="main-wrapper">    
         <div id="header-wrapper" class="row">
             <div class="col-lg-4" >
-                <img src="<c:url value="/resources/img/manutd-icon.png" />" alt="Home" />   
+                <img src="<c:url value="/resources/img/roommate_finder.png" />" alt="Home" />   
             </div>
             
             
