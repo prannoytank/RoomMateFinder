@@ -26,8 +26,14 @@ import org.springframework.web.servlet.ModelAndView;
 public class IntialController {
 
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
-    public ModelAndView landingPage() throws IOException {
-
+    public ModelAndView landingPage(HttpServletRequest request) throws IOException {
+        HttpSession session = request.getSession(false);
+//         if(session.getAttribute("users") == null){
+//            return new ModelAndView("pages/index/index");
+//         }
+//         else{
+//             return new ModelAndView("redirect:/home");
+//         } 
         return new ModelAndView("pages/index/index");
     }
 
