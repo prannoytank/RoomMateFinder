@@ -6,147 +6,63 @@
 <jsp:include page="includes/head.jsp" />
 <jsp:include page="includes/header.jsp" />
 <div id="content-wrapper" class="container-fluid">
-  <form:form method="POST" commandName="adModel">
-        <fieldset>
-            <legend>Location Details</legend>
-            <div class="row">  
-                <div class="col-md-4" >	
-                    <label for="country">Country</label>
-                    <form:input path="country" class="form-control" type="text" id="country" value="${adModel.country}" />
-                    <form:errors path="country" class="form-control" cssStyle="color: #ff0000;"/>
-                </div>
 
-                <div class="col-md-4" >	
-                    <label for="province">Province</label>
-                    <form:input path="province" class="form-control" type="text" id="province" value="${adModel.province}" />
-                    <form:errors path="province" class="form-control" cssStyle="color: #ff0000;"/>
-                </div>
+    <div class="row"> 
 
-                  <div class="col-md-4" >	
-                    <label for="city">City:</label>
-                    <form:select path="city">
-                        <form:options items="${cities}"  />
-                    </form:select>
-                    <form:errors path="city" class="form-control" cssStyle="color: #ff0000;"/>
-                </div>
+        <h2>${adModel.adTitle}</h2>    
+        <h3>${adModel.adPostDate}</h3>
+        
+        
+        
+        <c:if test="${not empty imagePath}">
+              
+            <c:forEach items="${imagePath}" var="imgPath">
+                ${imagePath} <br />
+                <img src="${imgPath}" alt="AdImage" />
+            </c:forEach>  
+            
+        </c:if> 
+        
+        <div>
 
-                <div class="col-md-6" >	
-                    <label for="streetAddress">Street address</label>
-                    <form:input path="streetAddress" class="form-control" type="text" id="streetAddress" value="${adModel.streetAddress}"/>
-                    <form:errors path="streetAddress" class="form-control" cssStyle="color: #ff0000;"/>
-                </div>
-
-
-                <div class="col-md-6"> 
-                    <label for="postalCode">Postal Code</label>
-                    <form:input path="postalCode" class="form-control" type="text" id="postalCode" value="${adModel.postalCode}" />
-                    <form:errors path="postalCode" class="form-control" cssStyle="color: #ff0000;"/>
-                </div>
-            </div>   
-        </fieldset>         
-
-        <fieldset>
-            <legend>House Details</legend>   
-            <div class="row">
-                 <div class="col-md-4" >	
-                    <label for="buildingType">Building Type:</label>
-                    <form:select path="buildingType">
-                        <form:options items="${buildingType}"  />
-                    </form:select>
-                    <form:errors path="buildingType" class="form-control" cssStyle="color: #ff0000;"/>
-                </div>   
-
-                <div class="col-md-4"> 
-                    <label for="roomType">Room Type</label>
-                    <form:input path="roomType" class="form-control" type="text" id="roomType" value="${adModel.roomType}" />
-                    <form:errors path="roomType" class="form-control" cssStyle="color: #ff0000;"/>
-                </div>
-
-               <div class="col-md-4" >	
-                    <label for="noOfRooms">Number of Rooms:</label>
-                    <form:select path="noOfRooms">
-                        <form:options items="${noOfRooms}"  />
-                    </form:select>
-                    <form:errors path="noOfRooms" class="form-control" cssStyle="color: #ff0000;"/>
-                </div>
-
-            </div>   
-        </fieldset>
-
-        <fieldset>
-            <legend>Extra Details</legend>   
-            <div class="row">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Location Details</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">House Details</a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Extra Details</a></li>
                 
-                <div class="col-md-6">
-                    <label for="gender">Gender</label>   
-                    <label class="checkbox-inline">
-                     <form:radiobutton path="gender" value="M"/>Male 
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="gender" value="F"/>Female
-                    </label>
-                    <label class="checkbox-inline">
-                      <form:radiobutton path="gender" value="O"/>Others
-                    </label>  
-                </div> 
-                    
-                <div class="col-md-6">
-                    <label for="pet">Pet Friendly</label>   
-                    <label class="checkbox-inline">
-                     <form:radiobutton path="pet" value="Y"/>Yes 
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="pet" value="N"/>No
-                    </label>
-                    
-                </div>
-                       
-                <div class="col-md-4">
-                    <label for="diet">Diet</label>   
-                    <label class="checkbox-inline">
-                     <form:radiobutton path="diet" value="Veg"/>Veg 
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="diet" value="Non-Veg"/>Non-Veg
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="diet" value="Vegan"/>Vegan
-                    </label>
-                    
-                </div> 
-                    
-                    
-                <div class="col-md-4">
-                    <label for="smoke">Smoker</label>   
-                    <label class="checkbox-inline">
-                     <form:radiobutton path="smoke" value="Y"/>Yes 
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="smoke" value="N"/>No
-                    </label>
-                    
-                </div> 
-                    
-                <div class="col-md-4">
-                    <label for="alcohol">Alcohol</label>   
-                    <label class="checkbox-inline">
-                     <form:radiobutton path="alcohol" value="Y"/>Yes 
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:radiobutton path="alcohol" value="N"/>No
-                    </label>
-                    
-                </div>     
-            </div>
-        </fieldset>
+            </ul>
 
-        <div class="row">
-        <input type="submit" name="submit" class="btn btn-success" value="Submit">
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    Street Address: ${adModel.streetAddress}  <br />
+                    Country: ${adModel.country}  <br />
+                    Province: ${adModel.province}  <br />
+                    City: ${adModel.city}  <br />
+                    Postal Code: ${adModel.postalCode}  <br />
+
+                </div>
+                <div role="tabpanel" class="tab-pane" id="profile">
+                    Building Type: ${adModel.buildingType}  <br />
+                    Room Type: ${adModel.roomType}  <br />
+                    No of Rooms: ${adModel.noOfRooms}  <br />
+                </div>
+                <div role="tabpanel" class="tab-pane" id="messages">
+                    Gender: ${adModel.gender}  <br />
+                    Pet Friendly: ${adModel.pet}  <br />
+                    Diet: ${adModel.diet}  <br />
+                    Smoker: ${adModel.smoke}  <br />
+                    Alcohol: ${adModel.alcohol}  <br />
+
+                </div>
+               
+            </div>
+
         </div>
 
-    </form:form>   
-    
-    
+    </div>                
+
 </div>
 
 <jsp:include page="includes/footer.jsp" />

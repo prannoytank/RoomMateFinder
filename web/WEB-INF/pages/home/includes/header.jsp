@@ -12,7 +12,8 @@
                 <li role="presentation"><a href="/RoomMateFinder/home">Home</a></li>
                 <li role="presentation"><a href="#">Profile</a></li>
                 <li role="presentation"><a href="/RoomMateFinder/settings">Settings</a></li>
-                <li role="presentation"><a href="#">Logout</a></li>
+                <li role="presentation"><a href="/RoomMateFinder/logout">Logout</a></li>
+
             </ul>
                 
             </div>
