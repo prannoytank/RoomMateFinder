@@ -20,7 +20,6 @@
                 ${imagePath} <br />
                 <img src="${imgPath}" alt="AdImage" />
             </c:forEach>  
-            
         </c:if> 
         
         <div>
@@ -30,7 +29,7 @@
                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Location Details</a></li>
                 <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">House Details</a></li>
                 <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Extra Details</a></li>
-                
+                <li role="presentation"><a href="#contact" aria-controls="contact" role="tab" data-toggle="tab">Contact</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -55,6 +54,12 @@
                     Smoker: ${adModel.smoke}  <br />
                     Alcohol: ${adModel.alcohol}  <br />
 
+                </div>
+                    <div role="tabpanel" class="tab-pane" id="contact">
+                    Name: ${userBean.name}  <br />
+                    Email Address: ${userBean.email}  <br />
+                    Contact: ${userBean.contact}  <br />
+                    
                 </div>
                
             </div>

@@ -188,8 +188,7 @@ public class AdvertismentDaoImpl implements AdvertismentDAO {
                 ads.setAdTitle(rs.getString("ADTITLE"));
                 ads.setStreetAddress(rs.getString("STREETADDRESS"));
                 ls.add(ads);
-                System.out.println(ls.size());
-            }
+                           }
 
         } catch (Exception e) {
 
@@ -217,15 +216,13 @@ public class AdvertismentDaoImpl implements AdvertismentDAO {
                 adBean.setAdPostDate(String.valueOf(rs.getDate("ADPOSTDATE")));
                 adBean.setAdTitle(rs.getString("ADTITLE"));
                 adBean.setStreetAddress(rs.getString("STREETADDRESS"));
-
                 userAdList.add(adBean);
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(AdvertismentDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.print(userAdList.size());
-        return userAdList;
+       return userAdList;
     }
 
 }

@@ -6,6 +6,7 @@
 package com.roommatefinder.controller;
 
 import com.roommatefinder.daoImpl.AdvertismentDaoImpl;
+import com.roommatefinder.daoImpl.UserDaoImpl;
 import com.roommatefinder.model.Advertisment;
 import com.roommatefinder.model.User;
 import com.roommatefinder.validator.AdvertismentValidator;
@@ -14,8 +15,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -51,7 +56,7 @@ public class AdvertismentController {
     @Autowired
    ServletConfig servletConfig;
 
-    @InitBinder
+    @InitBinder("adModel")
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
     }
@@ -59,7 +64,8 @@ public class AdvertismentController {
     @RequestMapping(method = RequestMethod.GET)
     public String initForm(Model model) {
         Advertisment adModel = new Advertisment();
-
+        User userModel=new User();
+        model.addAttribute("userModel", userModel);
         model.addAttribute("adModel", adModel);
         initModelList(model);
         return "pages/home/advertisment";
@@ -110,8 +116,21 @@ public class AdvertismentController {
 //        }
 
         Advertisment adBean = adi.findByAdvertismentId(adId);
-       
+        UserDaoImpl userdao=new UserDaoImpl();
+        User userBean = new User();
+        
+        ResultSet rs=userdao.getUserSettings(adBean.getUserId());
+        try {
+            while (rs.next()) {
+                userBean.setName(rs.getString("FULLNAME"));
+                userBean.setEmail(rs.getString("EMAIL"));
+                userBean.setContact(rs.getString("CONTACT"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AdvertismentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         model.addAttribute("adModel", adBean);
+        model.addAttribute("userBean", userBean);
         //model.addAttribute("imagePath",imageList);
         
         

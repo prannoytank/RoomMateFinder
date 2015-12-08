@@ -111,8 +111,9 @@ Connection connection;
      PreparedStatement preparedStatement = con.prepareStatement(query);
      
      preparedStatement.setDouble(1,userId );
-     
+ 
      rs= preparedStatement.executeQuery();
+         System.out.print("inside get user settings");
      }catch(Exception e){
          
      }
