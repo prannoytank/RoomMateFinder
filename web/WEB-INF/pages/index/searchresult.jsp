@@ -15,18 +15,19 @@
 <div class="bs-example">
     <c:if test="${searchdata!=null}">
             <table class="table">
-  
-        <tbody>
+           <tr><th>Title</th><th>Street Address</th><th>Date</th><th></th></tr>
+          <tbody>
         <c:forEach var="list" items="${searchdata}">
         	<tr class="active">
-                <td>${list.adTitle}</td>
-                <td></td>
-                <td>04/07/2014</td>
-                <td>Call in to confirm</td>
-            </tr>
+                <td><c:out value="${list.adTitle}" /></td>
+                 <td><c:out value="${list.streetAddress}" /></td>
+                <td><c:out value="${list.adPostDate}" /></td>
+        <td><a class="btn btn-info" href="/RoomMateFinder/advertisment/view/${adList.adId}" title="View Details">View Details</a></td>    
+                </tr>
         </c:forEach>
         </tbody>
     </table>
+            
     </c:if>
     
 </div>

@@ -6,20 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -77,7 +72,7 @@ public class AdvancedSearchController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String submitForm(Model model, @ModelAttribute("adModel1") @Valid Advertisment adModel1, BindingResult result) {
+    public ModelAndView submitForm(Model model, @ModelAttribute("adModel1") @Valid Advertisment adModel1, BindingResult result) {
 
         model.addAttribute("adModel1", adModel1);
         //initModelList(model);
@@ -86,19 +81,12 @@ public class AdvancedSearchController {
             returnVal = "pages/home/advancedSearch";
             //return "pages/home/advancedSearch";
         } else {
-            try{
             AdvertismentDaoImpl adDAO = new AdvertismentDaoImpl();
-            ResultSet rs = adDAO.searchAdvertisement(adModel1);
-            while (rs.next()) {
-                String id = rs.getString("ADTITLE");
-                System.out.println("title is " + id);
-            }
-            }catch(SQLException ex) {
-            Logger.getLogger(SettingsController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        }
+            List<Advertisment> list  = adDAO.searchAdvertisement(adModel1);
+             model.addAttribute("searchdata", list);
+                }
 
-        return "pages/home/advancedSearch";
+      return new ModelAndView("pages/index/searchresult");
     }
  
  

@@ -17,10 +17,9 @@
 <div id="content-wrapper">
     <div class ="row">
         <form:form cssClass="form-inline" action="/RoomMateFinder/searchindex" method="POST">
-            <div class="col-md-4" >	
+            <div class="row" >	
                     <label for="city">City:</label>
                     <select name="cities">
-                        <option value="Select" label=" - Select a city - "></option>
                         <option value="Toronto" lable="Toronto">Toronto</option>
                         <option value="Montreal" lable="Montreal">Montreal</option>
                         <option value="London" lable="London">London</option>
@@ -29,18 +28,12 @@
                         <option value="Winnipeg" lable="Winnipeg">Winnipeg</option>
                     </select>
                     <form:errors path="city" class="form-control" cssStyle="color: #ff0000;"/>
-                       <input class ="btn btn-default" type="submit" value="Search" /><br>
+                       <input class ="btn btn-warning btn-lg" type="submit" value="Search" /><br>
             </form:form>
-                    
-                 
-       
     
     </div>
-    <div class=" row"></div>
-
-    <div class = "row">
-        <br><button class ="btn btn-warning btn-lg" for ="advancedSearch">ADVANCED SEARCH</button><br>
-        <br>
+       <div class = "row">
+        <br><a class ="btn btn-warning btn-lg" href ="search" role ="button">ADVANCED SEARCH</button><br>
     </div>
 </div>
 
