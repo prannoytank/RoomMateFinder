@@ -90,7 +90,7 @@ public class AdvertismentDaoImpl implements AdvertismentDAO {
             rs = psmt.executeQuery();
             while (rs.next()) {
                 adBean.setAdId(adId);
-                adBean.setUserId(1);
+                adBean.setUserId(rs.getInt("USERID"));
                 adBean.setAdPostDate(String.valueOf(rs.getDate("ADPOSTDATE")));
                 adBean.setAdTitle(rs.getString("ADTITLE"));
                 adBean.setAlcohol(rs.getString("ALCOHOL"));

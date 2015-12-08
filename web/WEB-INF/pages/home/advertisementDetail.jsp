@@ -4,7 +4,22 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <jsp:include page="includes/head.jsp" />
+
+<%
+  if(request.getSession().getAttribute("users") != null)
+  {
+%>
 <jsp:include page="includes/header.jsp" />
+<%
+  }
+  
+  else
+  {
+%>
+<jsp:include page="../index/includes/header.jsp" />
+<%
+  }
+      %>
 <div id="content-wrapper" class="container-fluid">
 
     <div class="row"> 
