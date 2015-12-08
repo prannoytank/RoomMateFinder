@@ -10,6 +10,11 @@ and open the template in the editor.
 
 * {
     color:#2abb9b;
+    font-size: 24px;
+}
+
+#content-wrapper h1{
+    color: red;
 }
 
 a:hover{

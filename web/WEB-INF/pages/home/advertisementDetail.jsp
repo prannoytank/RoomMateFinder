@@ -24,8 +24,8 @@
 
     <div class="row"> 
 
-        <h2>${adModel.adTitle}</h2>    
-        <h3>${adModel.adPostDate}</h3>
+        <h1>${adModel.adTitle}</h1>    
+        <h3>Posted Date :${adModel.adPostDate}</h3>
 
 
 
@@ -85,4 +85,19 @@
 
 </div>
 
+                    <%
+  if(request.getSession().getAttribute("users") != null)
+  {
+%>
 <jsp:include page="includes/footer.jsp" />
+<%
+  }
+  
+  else
+  {
+%>
+<jsp:include page="../index/includes/footer.jsp" />
+<%
+  }
+      %>
+
