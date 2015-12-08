@@ -12,7 +12,7 @@
             <ul class="nav nav-pills nav-justified" id="primary-nav-bar">
                 <li role="presentation"><a href="/RoomMateFinder/home">Home</a></li>
                 <li role="presentation"><a href="#">Profile</a></li>
-                <li role="presentation"><a href="#">Settings</a></li>
+                <li role="presentation"><a href="/RoomMateFinder/settings">Settings</a></li>
                 <li role="presentation"><a href="#">Logout</a></li>
 
             </ul>

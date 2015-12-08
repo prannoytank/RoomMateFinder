@@ -28,5 +28,5 @@ public interface AdvertismentDAO {
     
     public Connection getConnection();
     
-    public ResultSet searchAdvertisement(Advertisment amodel);
+    public List<Advertisment> searchAdvertisement(Advertisment amodel);
 }

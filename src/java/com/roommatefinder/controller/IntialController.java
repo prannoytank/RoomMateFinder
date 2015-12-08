@@ -31,9 +31,10 @@ public class IntialController {
 
     @RequestMapping(value = "/searchindex", method = RequestMethod.POST)
     public ModelAndView search(HttpServletRequest request, Model model) throws IOException {
+       
         String city = request.getParameter("cities");
         AdvertismentDaoImpl advs = new AdvertismentDaoImpl();
-        System.out.println(city);
+       
         List<Advertisment> list = advs.findByCity(city);
 
         model.addAttribute("searchdata", list);
